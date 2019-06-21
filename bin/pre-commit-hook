@@ -1,0 +1,31 @@
+#!/usr/bin/env bash
+
+vendor/bin/phpstan analyze --level 5 src
+STAN_EC=$?
+
+vendor/bin/phpcs
+CS_EC=$?
+
+vendor/bin/phpunit
+UNIT_EC=$?
+
+composer validate --strict
+COMPOSER_VALIDATE_EC=$?
+
+EXIT_COUNT=$(grep -rni -E 'exit(\(|;)' src | wc -l)
+echo "${EXIT_COUNT} exits found"
+
+VARDUMP_COUNT=$(grep -rni var_dump src | wc -l)
+echo "${VARDUMP_COUNT} var_dumps found"
+
+echo "$(grep -rni '@todo' src | wc -l) @todo found in src"
+echo "$(grep -rni '@deprecated' src | wc -l) @deprecated found in src"
+
+
+# Exit if any error codes
+ERROR=$(($STAN_EC + $CS_EC + $UNIT_EC + $COMPOSER_VALIDATE_EC + $EXIT_COUNT + $VARDUMP_COUNT))
+if [ "${ERROR}" -ne "0" ]
+then
+  echo -e "\n\n*** Commit aborted. ***"
+  exit 1
+fi

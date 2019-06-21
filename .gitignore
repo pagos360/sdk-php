@@ -1,0 +1,16 @@
+.idea
+.vscode
+
+.env
+.phpunit.result.cache
+coverage
+
+
+composer.lock
+vendor
+
+# Temporary
+test.php
+try.php
+docs
+bin/modelGenerator.php
