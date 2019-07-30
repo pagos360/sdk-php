@@ -4,11 +4,12 @@ SDK para realizar transacciones por medio de Pagos360.com
 
 Módulo para conexión con Pagos360.com
 
-- [Instalación](#instalacion)
-- [Introducción](#introduccion)
+- [Instalación](#instalación)
+- [Introducción](#introducción)
   - [Inicialización](#inicialización)
   - [Paginación](#paginación)
   - [Filtros](#filtros)
+  - [Resultados](#resultados)
 - Modelos
   - [Solicitud de Pago](#solicitud-de-pago) (`PaymentRequest`)
   - Solicitud de Débito (`DebitRequest`)
@@ -22,7 +23,7 @@ Módulo para conexión con Pagos360.com
 La instalación se debe hacer mediante [Composer](http://getcomposer.org/) con el siguiente comando:
 
 ```bash
-composer require pagos360/sdk-php
+composer require pagos360/sdk
 ```
 
 # Introducción
@@ -122,6 +123,8 @@ $paginationData = $paginatedPaymentRequests->getPagination(); // @todo
 
 ## Listado con filtros
 
+[]()
+
 ```php
 $filters = new PaymentRequestFilters([
     PaymentRequestFilters::STATE => "paid",
@@ -139,21 +142,27 @@ $paymentRequests = $paginatedPaymentRequests->getData();
 
 ### Filtros disponibles
 
-| Nombre                                     | Tipo   | Query param         |
-| ------------------------------------------ | ------ | ------------------- |
-| PaymentRequestFilters::EXTERNAL_REFERENCE  | string | external_reference  |
-| PaymentRequestFilters::STATE               | string | state               |
-| PaymentRequestFilters::CREATED_AT_LTE      | date   | created_at_lte      |
-| PaymentRequestFilters::CREATED_AT_GTE      | date   | created_at_gte      |
-| PaymentRequestFilters::FIRST_DUE_DATE_LTE  | date   | first_due_date_lte  |
-| PaymentRequestFilters::FIRST_DUE_DATE_GTE  | date   | first_due_date_gte  |
-| PaymentRequestFilters::FIRST_TOTAL_LTE     | float  | first_total_lte     |
-| PaymentRequestFilters::FIRST_TOTAL_GTE     | float  | first_total_gte     |
-| PaymentRequestFilters::SECOND_DUE_DATE_LTE | float  | second_due_date_lte |
-| PaymentRequestFilters::SECOND_DUE_DATE_GTE | float  | second_due_date_gte |
-| PaymentRequestFilters::SECOND_TOTAL_LTE    | date   | second_total_lte    |
-| PaymentRequestFilters::SECOND_TOTAL_GTE    | date   | second_total_gte    |
-| PaymentRequestFilters::PAYER_NAME          | string | payer_name          |
+| Nombre                                     | Tipo     | Query param         |
+| ------------------------------------------ | -------- | ------------------- |
+| PaymentRequestFilters::EXTERNAL_REFERENCE  | string   | external_reference  |
+| PaymentRequestFilters::STATE               | string   | state               |
+| PaymentRequestFilters::CREATED_AT_LTE      | DateTime | created_at_lte      |
+| PaymentRequestFilters::CREATED_AT_GTE      | DateTime | created_at_gte      |
+| PaymentRequestFilters::FIRST_DUE_DATE_LTE  | DateTime | first_due_date_lte  |
+| PaymentRequestFilters::FIRST_DUE_DATE_GTE  | DateTime | first_due_date_gte  |
+| PaymentRequestFilters::FIRST_TOTAL_LTE     | float    | first_total_lte     |
+| PaymentRequestFilters::FIRST_TOTAL_GTE     | float    | first_total_gte     |
+| PaymentRequestFilters::SECOND_DUE_DATE_LTE | float    | second_due_date_lte |
+| PaymentRequestFilters::SECOND_DUE_DATE_GTE | float    | second_due_date_gte |
+| PaymentRequestFilters::SECOND_TOTAL_LTE    | DateTime | second_total_lte    |
+| PaymentRequestFilters::SECOND_TOTAL_GTE    | DateTime | second_total_gte    |
+| PaymentRequestFilters::PAYER_NAME          | string   | payer_name          |
+
+## Resultados
+
+[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/conceptos-generales#atributos-del-objeto-request_result)
+
+Los resultados de una Solicitud de Pago estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`.
 
 ## Funciones de utilidad
 
