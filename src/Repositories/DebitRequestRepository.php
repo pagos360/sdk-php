@@ -4,6 +4,7 @@ namespace Pagos360\Repositories;
 
 use Pagos360\Constants;
 use Pagos360\Exceptions\DebitRequests\DebitRequestNotPaidException;
+use Pagos360\Filters\DebitRequestFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\DebitRequest;
 use Pagos360\PaginatedResponse;
@@ -103,6 +104,38 @@ class DebitRequestRepository extends AbstractRepository
     }
 
     /**
+     * @param DebitRequestFilters|null $filters
+     * @param int                      $page
+     * @param int                      $itemsPerPage
+     * @return PaginatedResponse
+     */
+    public function getFilteredPage(
+        DebitRequestFilters $filters = null,
+        int $page = 1,
+        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
+    ): PaginatedResponse {
+        $queryString = $this->buildPagedQueryString(
+            $page,
+            $itemsPerPage,
+            $filters
+        );
+        $paginatedResponse = $this->restClient->get(
+            self::API_URI,
+            $queryString
+        );
+
+        $pagination = $this->getPaginationFromPaginatedResponse(
+            $paginatedResponse
+        );
+        $data = $this->parseDatafromPaginatedResponse(
+            self::MODEL,
+            $paginatedResponse
+        );
+
+        return new PaginatedResponse($pagination, $data);
+    }
+
+    /**
      * @param DebitRequest $debitRequest
      * @return bool
      */
@@ -125,8 +158,6 @@ class DebitRequestRepository extends AbstractRepository
 
         return $debitRequest;
     }
-
-
 
     /**
      * @param DebitRequest $debitRequest
