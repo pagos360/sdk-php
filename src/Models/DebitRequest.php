@@ -29,7 +29,7 @@ class DebitRequest extends AbstractModel
     protected $createdAt;
 
     /**
-     * Id de la Adhesión
+     * Adhesión
      *
      * @var Adhesion
      */

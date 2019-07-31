@@ -199,7 +199,6 @@ class PaymentRequestRepository extends AbstractRepository
         return new PaginatedResponse($pagination, $data);
     }
 
-
     /**
      * @param PaymentRequest $paymentRequest
      * @return PaymentRequest
