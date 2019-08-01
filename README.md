@@ -16,19 +16,19 @@ Módulo para conexión con Pagos360.com
 
   - [Solicitud de Pago](#solicitud-de-pago) (`PaymentRequest`)
 
+    - [Crear](#crear)
+    - [Buscar por id](#buscar-por-id)
+    - [Listar](#listar)
+    - [Listar con filtros](#listar-con-filtros)
+    - [Resultados](#resultados)
+
+  - [Solicitud de Débito](#solicitud-de-débito) (`DebitRequest`)
+
     - [Crear](#crear-1)
     - [Buscar por id](#buscar-por-id-1)
     - [Listar](#listar-1)
     - [Listar con filtros](#listar-con-filtros-1)
     - [Resultados](#resultados-1)
-
-  - [Solicitud de Débito](#solicitud-de-débito) (`DebitRequest`)
-
-    - [Crear](#crear-2)
-    - [Buscar por id](#buscar-por-id-2)
-    - [Listar](#listar-2)
-    - [Listar con filtros](#listar-con-filtros-2)
-    - [Resultados](#resultados-2)
 
   - Adhesion (`Adhesion`)
   - Cuenta (`Account`)
