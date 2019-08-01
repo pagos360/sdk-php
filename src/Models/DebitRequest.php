@@ -2,6 +2,8 @@
 
 namespace Pagos360\Models;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class DebitRequest extends AbstractModel
 {
     /**
@@ -70,6 +72,10 @@ class DebitRequest extends AbstractModel
      */
     protected $description;
 
+    /**
+     * @var ArrayCollection|null
+     */
+    protected $results;
 
     /**
      * @return int
@@ -201,5 +207,13 @@ class DebitRequest extends AbstractModel
     {
         $this->description = $description;
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getResults(): ?ArrayCollection
+    {
+        return $this->results;
     }
 }

@@ -7,6 +7,7 @@ use Pagos360\Exceptions\DebitRequests\DebitRequestNotPaidException;
 use Pagos360\Filters\DebitRequestFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\DebitRequest;
+use Pagos360\Models\Result;
 use Pagos360\PaginatedResponse;
 use Pagos360\Types;
 
@@ -57,6 +58,11 @@ class DebitRequestRepository extends AbstractRepository
         ],
         'description' => [
             self::TYPE => Types::STRING,
+        ],
+        'results' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::RESULTS,
+            self::PROPERTY_PATH => 'request_result',
         ],
     ];
 
@@ -174,5 +180,22 @@ class DebitRequestRepository extends AbstractRepository
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
         return ModelFactory::build(DebitRequest::class, $fromApi);
+    }
+
+    /**
+     * @param DebitRequest $debitRequest
+     * @return Result|null
+     */
+    public function findCollectedResult(
+        DebitRequest $debitRequest
+    ): ?Result {
+        foreach ($debitRequest->getResults() as $result) {
+            /** @var Result $result */
+            if ($result->getType() === 'collected_debit_request_result') {
+                return $result;
+            }
+        }
+
+        return null;
     }
 }

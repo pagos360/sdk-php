@@ -23,7 +23,7 @@ class ResultRepository extends AbstractRepository
         ],
         'availableAt' => [
             self::FLAG_READONLY => true,
-            self::TYPE => Types::DATE,
+            self::TYPE => Types::DATETIME,
             self::FLAG_MAYBE => true,
             self::PROPERTY_PATH => 'available_at',
         ],
@@ -67,6 +67,18 @@ class ResultRepository extends AbstractRepository
             self::TYPE => Types::PAYMENT_METADATA,
             self::FLAG_MAYBE => true,
             self::PROPERTY_PATH => 'payment_metadata',
+        ],
+        'rejectedAt' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::DATETIME,
+            self::FLAG_MAYBE => true,
+            self::PROPERTY_PATH => 'rejected_at',
+        ],
+        'stateComment' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::STRING,
+            self::FLAG_MAYBE => true,
+            self::PROPERTY_PATH => 'state_comment',
         ],
     ];
 }

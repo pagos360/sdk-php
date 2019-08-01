@@ -183,7 +183,7 @@ $paymentRequests = $paginatedPaymentRequests->getData();
 
 [Documentación](https://developers.pagos360.com/api/endpoints/payment-request/conceptos-generales#atributos-del-objeto-request_result)
 
-Los resultados de una Solicitud de Pago estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`.
+Los resultados de una Solicitud de Pago estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
 
 ```php
 $paymentRequest = $sdk->paymentRequests->get(234741);
@@ -304,6 +304,22 @@ var_dump($paginationData);
 | DebitRequestFilters::ADHESION_HOLDER_NAME | string   | adhesion_holder_name |
 
 ## Resultados
+
+[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/conceptos-generales#atributos-del-objeto-request_result)
+
+Los resultados de una Solicitud de Débito estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
+
+```php
+$debitRequest = $sdk->debitRequests->get(185027);
+
+$collectedResult = $sdk->debitRequests->findCollectedResult($debitRequest);
+echo sprintf(
+    'Solicitud de Debito %s pagada. Monto: $%s.%s',
+    $paymentRequest->getId(),
+    $collectedResult->getAmount(),
+    PHP_EOL
+);
+```
 
 # Adhesiones
 

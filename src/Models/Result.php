@@ -29,7 +29,7 @@ class Result extends AbstractModel
     /**
      * Fecha y hora en la que el saldo de la transacción queda disponible.
      *
-     * @var \DateTimeInterface|null
+     * @var \DateTimeImmutable|null
      */
     protected $availableAt;
 
@@ -83,6 +83,21 @@ class Result extends AbstractModel
      */
     protected $paymentMetadata;
 
+    /**
+     * En caso que sea una Solicitud de Debito, este campo indica la fecha y
+     * hora en la que fue rechazada.
+     *
+     * @var \DateTimeImmutable|null
+     */
+    protected $rejectedAt;
+
+    /**
+     * En caso que sea una Solicitud de Debito, este campo indica el motivo de
+     * rechazo o cancelación.
+     *
+     * @var string|null
+     */
+    protected $stateComment;
 
     /**
      * @return int
@@ -109,7 +124,7 @@ class Result extends AbstractModel
     }
 
     /**
-     * @return \DateTimeInterface|null
+     * @return \DateTimeImmutable|null
      */
     public function getAvailableAt(): ?\DateTimeInterface
     {
@@ -170,5 +185,21 @@ class Result extends AbstractModel
     public function getPaymentMetadata(): ?PaymentMetadata
     {
         return $this->paymentMetadata;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getRejectedAt(): ?\DateTimeImmutable
+    {
+        return $this->rejectedAt;
+    }
+
+    /**
+     * @return string|null
+     */
+    public function getStateComment(): ?string
+    {
+        return $this->stateComment;
     }
 }
