@@ -5,6 +5,8 @@ namespace Pagos360;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
+use Pagos360\Models\ChargebackData;
+use Pagos360\Models\ChargebackReport;
 use Pagos360\Models\CollectionData;
 use Pagos360\Models\CollectionReport;
 use Pagos360\Models\DebitRequest;
@@ -12,9 +14,13 @@ use Pagos360\Models\HolderData;
 use Pagos360\Models\PaymentMetadata;
 use Pagos360\Models\PaymentRequest;
 use Pagos360\Models\Result;
+use Pagos360\Models\SettlementData;
+use Pagos360\Models\SettlementReport;
 use Pagos360\Repositories\AbstractRepository;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
+use Pagos360\Repositories\ChargebackDataRepository;
+use Pagos360\Repositories\ChargebackReportRepository;
 use Pagos360\Repositories\CollectionDataRepository;
 use Pagos360\Repositories\CollectionReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
@@ -22,13 +28,14 @@ use Pagos360\Repositories\HolderDataRepository;
 use Pagos360\Repositories\PaymentMetadataRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
 use Pagos360\Repositories\ResultRepository;
+use Pagos360\Repositories\SettlementReportRepository;
 
 class ModelFactory
 {
     /**
      * @param string $model
      * @param array  $input
-     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account|CollectionReport
+     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account|CollectionReport|SettlementReport|ChargebackReport
      * @throws \InvalidArgumentException
      */
     public static function build(string $model, array $input)
@@ -61,8 +68,17 @@ class ModelFactory
             case CollectionData::class:
                 $fields = CollectionDataRepository::FIELDS;
                 break;
+            case SettlementReport::class:
+                $fields = SettlementReportRepository::FIELDS;
+                break;
+            case ChargebackReport::class:
+                $fields = ChargebackReportRepository::FIELDS;
+                break;
+            case ChargebackData::class:
+                $fields = ChargebackDataRepository::FIELDS;
+                break;
             default:
-                throw new \InvalidArgumentException("Cant build model $model");
+                throw new \InvalidArgumentException("Can't build model $model");
         }
 
         /** @var Adhesion|PaymentRequest|DebitRequest|HolderData|Account $instance */
@@ -86,6 +102,15 @@ class ModelFactory
         switch ($collectionOf) {
             case Types::RESULTS:
                 $model = Result::class;
+                break;
+            case Types::COLLECTION_DATA:
+                $model = CollectionData::class;
+                break;
+            case Types::SETTLEMENT_DATA:
+                $model = SettlementData::class;
+                break;
+            case Types::CHARGEBACK_DATA:
+                $model = ChargebackData::class;
                 break;
             default:
                 throw new \InvalidArgumentException('Cant build collection');
@@ -193,12 +218,20 @@ class ModelFactory
                 return self::build(HolderData::class, $value);
             case Types::PAYMENT_METADATA:
                 return self::build(PaymentMetadata::class, $value);
+            case Types::RESULTS:
+                return self::buildCollection(Types::RESULTS, $value);
             case Types::COLLECTION_REPORT:
                 return self::build(CollectionReport::class, $value);
             case Types::COLLECTION_DATA:
                 return self::buildCollection(CollectionData::class, $value);
-            case Types::RESULTS:
-                return self::buildCollection(Types::RESULTS, $value);
+            case Types::SETTLEMENT_REPORT:
+                return self::build(SettlementReport::class, $value);
+            case Types::SETTLEMENT_DATA:
+                return self::buildCollection(SettlementData::class, $value);
+            case Types::CHARGEBACK_REPORT:
+                return self::build(ChargebackReport::class, $value);
+            case Types::CHARGEBACK_DATA:
+                return self::buildCollection(ChargebackData::class, $value);
             case Types::INT:
                 return (int) $value;
             case Types::STRING:

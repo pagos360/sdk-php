@@ -6,9 +6,11 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions as GuzzleRequestOptions;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
+use Pagos360\Repositories\ChargebackReportRepository;
 use Pagos360\Repositories\CollectionReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
+use Pagos360\Repositories\SettlementReportRepository;
 use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerInterface;
 
@@ -48,6 +50,16 @@ class Sdk implements LoggerAwareInterface
     public $collectionReports;
 
     /**
+     * @var SettlementReportRepository
+     */
+    public $settlementReports;
+
+    /**
+     * @var ChargebackReportRepository
+     */
+    public $chargebackReports;
+
+    /**
      * @var LoggerInterface|null
      */
     protected $logger;
@@ -76,6 +88,8 @@ class Sdk implements LoggerAwareInterface
         $this->adhesions = new AdhesionRepository($this->restClient);
         $this->account = new AccountRepository($this->restClient);
         $this->collectionReports = new CollectionReportRepository($this->restClient);
+        $this->settlementReports = new SettlementReportRepository($this->restClient);
+        $this->chargebackReports = new ChargebackReportRepository($this->restClient);
     }
 
     /**
@@ -106,5 +120,8 @@ class Sdk implements LoggerAwareInterface
         $this->paymentRequests->setLogger($logger);
         $this->debitRequests->setLogger($logger);
         $this->adhesions->setLogger($logger);
+        $this->collectionReports->setLogger($logger);
+        $this->settlementReports->setLogger($logger);
+        $this->chargebackReports->setLogger($logger);
     }
 }
