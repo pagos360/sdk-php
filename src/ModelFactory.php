@@ -5,8 +5,8 @@ namespace Pagos360;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
-use Pagos360\Models\CollectedData;
-use Pagos360\Models\CollectedReport;
+use Pagos360\Models\CollectionData;
+use Pagos360\Models\CollectionReport;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\HolderData;
 use Pagos360\Models\PaymentMetadata;
@@ -15,8 +15,8 @@ use Pagos360\Models\Result;
 use Pagos360\Repositories\AbstractRepository;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
-use Pagos360\Repositories\CollectedDataRepository;
-use Pagos360\Repositories\CollectedReportRepository;
+use Pagos360\Repositories\CollectionDataRepository;
+use Pagos360\Repositories\CollectionReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\HolderDataRepository;
 use Pagos360\Repositories\PaymentMetadataRepository;
@@ -28,7 +28,7 @@ class ModelFactory
     /**
      * @param string $model
      * @param array  $input
-     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account|CollectedReport
+     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account|CollectionReport
      * @throws \InvalidArgumentException
      */
     public static function build(string $model, array $input)
@@ -55,11 +55,11 @@ class ModelFactory
             case PaymentMetadata::class:
                 $fields = PaymentMetadataRepository::FIELDS;
                 break;
-            case CollectedReport::class:
-                $fields = CollectedReportRepository::FIELDS;
+            case CollectionReport::class:
+                $fields = CollectionReportRepository::FIELDS;
                 break;
-            case CollectedData::class:
-                $fields = CollectedDataRepository::FIELDS;
+            case CollectionData::class:
+                $fields = CollectionDataRepository::FIELDS;
                 break;
             default:
                 throw new \InvalidArgumentException("Cant build model $model");
@@ -193,10 +193,10 @@ class ModelFactory
                 return self::build(HolderData::class, $value);
             case Types::PAYMENT_METADATA:
                 return self::build(PaymentMetadata::class, $value);
-            case Types::COLLECTED_REPORT:
-                return self::build(CollectedReport::class, $value);
-            case Types::COLLECTED_DATA:
-                return self::buildCollection(CollectedData::class, $value);
+            case Types::COLLECTION_REPORT:
+                return self::build(CollectionReport::class, $value);
+            case Types::COLLECTION_DATA:
+                return self::buildCollection(CollectionData::class, $value);
             case Types::RESULTS:
                 return self::buildCollection(Types::RESULTS, $value);
             case Types::INT:

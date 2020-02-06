@@ -3,12 +3,12 @@
 namespace Pagos360\Repositories;
 
 use Pagos360\ModelFactory;
-use Pagos360\Models\CollectedReport;
+use Pagos360\Models\CollectionReport;
 use Pagos360\Types;
 
-class CollectedReportRepository extends AbstractRepository
+class CollectionReportRepository extends AbstractRepository
 {
-    const MODEL = CollectedReport::class;
+    const MODEL = CollectionReport::class;
     const API_URI = 'report/collection';
     const EDITABLE = false;
     const FIELDS = [
@@ -38,7 +38,7 @@ class CollectedReportRepository extends AbstractRepository
             self::PROPERTY_PATH => 'total_net_amount',
         ],
         "data" => [
-            self::TYPE => Types::COLLECTED_DATA,
+            self::TYPE => Types::COLLECTION_DATA,
             self::FLAG_READONLY => true,
         ],
     ];
@@ -46,9 +46,9 @@ class CollectedReportRepository extends AbstractRepository
 
     /**
      * @param \DateTimeInterface $datetime
-     * @return CollectedReport
+     * @return CollectionReport
      */
-    public function get(\DateTimeInterface $datetime): CollectedReport
+    public function get(\DateTimeInterface $datetime): CollectionReport
     {
         $url = sprintf('%s/%s', self::API_URI, $datetime->format('d-m-Y'));
         $fromApi = $this->restClient->get($url);

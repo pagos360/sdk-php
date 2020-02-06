@@ -2,12 +2,12 @@
 
 namespace Pagos360\Repositories;
 
-use Pagos360\Models\CollectedData;
+use Pagos360\Models\CollectionData;
 use Pagos360\Types;
 
-class CollectedDataRepository extends AbstractRepository
+class CollectionDataRepository extends AbstractRepository
 {
-    const MODEL = CollectedData::class;
+    const MODEL = CollectionData::class;
     const EDITABLE = false;
     const FIELDS = [
         "informedDate" => [

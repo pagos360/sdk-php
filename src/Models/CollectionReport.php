@@ -4,7 +4,7 @@ namespace Pagos360\Models;
 
 use Doctrine\Common\Collections\ArrayCollection;
 
-class CollectedReport extends AbstractModel
+class CollectionReport extends AbstractModel
 {
     /**
      * ID de la cuenta propietaria del Reporte.

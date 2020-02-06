@@ -2,7 +2,7 @@
 
 namespace Pagos360\Models;
 
-class CollectedData extends AbstractModel
+class CollectionData extends AbstractModel
 {
     /**
      * Fecha en la que se informo el Cobro.
