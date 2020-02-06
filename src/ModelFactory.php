@@ -5,6 +5,8 @@ namespace Pagos360;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
+use Pagos360\Models\CollectedData;
+use Pagos360\Models\CollectedReport;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\HolderData;
 use Pagos360\Models\PaymentMetadata;
@@ -13,6 +15,8 @@ use Pagos360\Models\Result;
 use Pagos360\Repositories\AbstractRepository;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
+use Pagos360\Repositories\CollectedDataRepository;
+use Pagos360\Repositories\CollectedReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\HolderDataRepository;
 use Pagos360\Repositories\PaymentMetadataRepository;
@@ -24,7 +28,7 @@ class ModelFactory
     /**
      * @param string $model
      * @param array  $input
-     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account
+     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account|CollectedReport
      * @throws \InvalidArgumentException
      */
     public static function build(string $model, array $input)
@@ -51,8 +55,14 @@ class ModelFactory
             case PaymentMetadata::class:
                 $fields = PaymentMetadataRepository::FIELDS;
                 break;
+            case CollectedReport::class:
+                $fields = CollectedReportRepository::FIELDS;
+                break;
+            case CollectedData::class:
+                $fields = CollectedDataRepository::FIELDS;
+                break;
             default:
-                throw new \InvalidArgumentException('Cant build model');
+                throw new \InvalidArgumentException("Cant build model $model");
         }
 
         /** @var Adhesion|PaymentRequest|DebitRequest|HolderData|Account $instance */
@@ -183,6 +193,10 @@ class ModelFactory
                 return self::build(HolderData::class, $value);
             case Types::PAYMENT_METADATA:
                 return self::build(PaymentMetadata::class, $value);
+            case Types::COLLECTED_REPORT:
+                return self::build(CollectedReport::class, $value);
+            case Types::COLLECTED_DATA:
+                return self::buildCollection(CollectedData::class, $value);
             case Types::RESULTS:
                 return self::buildCollection(Types::RESULTS, $value);
             case Types::INT:

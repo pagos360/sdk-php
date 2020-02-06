@@ -6,6 +6,7 @@ use GuzzleHttp\Client as GuzzleClient;
 use GuzzleHttp\RequestOptions as GuzzleRequestOptions;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
+use Pagos360\Repositories\CollectedReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
 use Psr\Log\LoggerAwareInterface;
@@ -42,6 +43,11 @@ class Sdk implements LoggerAwareInterface
     public $account;
 
     /**
+     * @var CollectedReportRepository
+     */
+    public $collectedReports;
+
+    /**
      * @var LoggerInterface|null
      */
     protected $logger;
@@ -69,6 +75,7 @@ class Sdk implements LoggerAwareInterface
         $this->debitRequests = new DebitRequestRepository($this->restClient);
         $this->adhesions = new AdhesionRepository($this->restClient);
         $this->account = new AccountRepository($this->restClient);
+        $this->collectedReports = new CollectedReportRepository($this->restClient);
     }
 
     /**

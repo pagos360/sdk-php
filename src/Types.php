@@ -18,5 +18,7 @@ class Types
     const ADHESION = 'adhesion';
     const HOLDER_DATA = 'holderData';
     const RESULTS = 'results';
+    const COLLECTED_REPORT = 'collectedReport';
+    const COLLECTED_DATA = 'collectedData';
     const PAYMENT_METADATA = 'paymentMetadata';
 }
