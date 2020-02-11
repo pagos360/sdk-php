@@ -5,6 +5,7 @@ namespace Pagos360;
 use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
+use Pagos360\Models\CardAdhesion;
 use Pagos360\Models\ChargebackData;
 use Pagos360\Models\ChargebackReport;
 use Pagos360\Models\CollectionData;
@@ -19,6 +20,7 @@ use Pagos360\Models\SettlementReport;
 use Pagos360\Repositories\AbstractRepository;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
+use Pagos360\Repositories\CardAdhesionRepository;
 use Pagos360\Repositories\ChargebackDataRepository;
 use Pagos360\Repositories\ChargebackReportRepository;
 use Pagos360\Repositories\CollectionDataRepository;
@@ -76,6 +78,9 @@ class ModelFactory
                 break;
             case ChargebackData::class:
                 $fields = ChargebackDataRepository::FIELDS;
+                break;
+            case CardAdhesion::class:
+                $fields = CardAdhesionRepository::FIELDS;
                 break;
             default:
                 throw new \InvalidArgumentException("Can't build model $model");
@@ -232,6 +237,8 @@ class ModelFactory
                 return self::build(ChargebackReport::class, $value);
             case Types::CHARGEBACK_DATA:
                 return self::buildCollection(ChargebackData::class, $value);
+            case Types::CARD_ADHESION:
+                return self::build(CardAdhesion::class, $value);
             case Types::INT:
                 return (int) $value;
             case Types::STRING:

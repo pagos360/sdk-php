@@ -25,4 +25,5 @@ class Types
     const CHARGEBACK_REPORT = 'chargebackReport';
     const CHARGEBACK_DATA = 'chargebackData';
     const PAYMENT_METADATA = 'paymentMetadata';
+    const CARD_ADHESION = 'cardAdhesion';
 }
