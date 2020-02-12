@@ -2,10 +2,8 @@
 
 namespace Pagos360\Repositories;
 
-use Pagos360\Filters\AdhesionFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\Adhesion;
-use Pagos360\PaginatedResponse;
 use Pagos360\Types;
 
 class AdhesionRepository extends AbstractRepository
@@ -13,7 +11,6 @@ class AdhesionRepository extends AbstractRepository
     const MODEL = Adhesion::class;
     const BLOCK_PREFIX = 'adhesion';
     const API_URI = 'adhesion';
-    const DEFAULT_ITEMS_PER_PAGE = 25;
 
     const EDITABLE = false;
     const FIELDS = [
@@ -95,66 +92,6 @@ class AdhesionRepository extends AbstractRepository
         $fromApi = $this->restClient->get($url);
 
         return ModelFactory::build(Adhesion::class, $fromApi);
-    }
-
-    /**
-     * @param int $page
-     * @param int $itemsPerPage
-     * @return PaginatedResponse
-     */
-    public function getPage(
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $url = sprintf('%s', self::API_URI);
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            null
-        );
-        $paginatedResponse = $this->restClient->get($url, $queryString);
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
-    }
-
-    /**
-     * @param AdhesionFilters|null $filters
-     * @param int                  $page
-     * @param int                  $itemsPerPage
-     * @return PaginatedResponse
-     */
-    public function getFilteredPage(
-        ?AdhesionFilters $filters,
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            $filters
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
     }
 
     /**

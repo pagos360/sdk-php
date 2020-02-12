@@ -5,12 +5,9 @@ namespace Pagos360\Repositories;
 use Pagos360\Constants;
 use Pagos360\Exceptions\MissingRequiredInputException;
 use Pagos360\Exceptions\PaymentRequests\PaymentRequestNotPaidException;
-use Pagos360\Filters\PaymentRequestFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\PaymentRequest;
 use Pagos360\Models\Result;
-use Pagos360\PaginatedResponse;
-use Pagos360\Pagination;
 use Pagos360\Types;
 
 class PaymentRequestRepository extends AbstractRepository
@@ -18,7 +15,6 @@ class PaymentRequestRepository extends AbstractRepository
     const MODEL = PaymentRequest::class;
     const BLOCK_PREFIX = 'payment_request';
     const API_URI = 'payment-request';
-    const DEFAULT_ITEMS_PER_PAGE = 25;
 
     const EDITABLE = false;
     const FIELDS = [
@@ -136,70 +132,6 @@ class PaymentRequestRepository extends AbstractRepository
     }
 
     /**
-     * @param int $page
-     * @param int $itemsPerPage
-     * @return PaginatedResponse
-     * @todo Abstract some of this?
-     */
-    public function getPage(
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            null
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
-    }
-
-    /**
-     * @param PaymentRequestFilters|null $filters
-     * @param int                        $page
-     * @param int                        $itemsPerPage
-     * @return PaginatedResponse
-     * @todo Abstract some of this?
-     */
-    public function getFilteredPage(
-        PaymentRequestFilters $filters = null,
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            $filters
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
-    }
-
-    /**
      * @param PaymentRequest $paymentRequest
      * @return PaymentRequest
      * @throws MissingRequiredInputException
@@ -239,33 +171,6 @@ class PaymentRequestRepository extends AbstractRepository
         }
 
         return $paymentRequest;
-    }
-
-    /**
-     * @param PaymentRequestFilters|null $filters
-     * @return \Generator|PaymentRequest[]
-     */
-    public function listGenerator(
-        ?PaymentRequestFilters $filters = null
-    ): \Generator {
-        $url = sprintf('%s', self::API_URI);
-        $pagination = new Pagination(1, self::DEFAULT_ITEMS_PER_PAGE);
-
-        do {
-            $parsedFilters = $this->parseFilters($filters);
-            $queryString = array_merge(
-                $parsedFilters,
-                $pagination->toQueryString()
-            );
-            $fromApi = $this->restClient->get($url, $queryString);
-
-            foreach ($fromApi['data'] as $pr) {
-                yield ModelFactory::build(PaymentRequest::class, $pr);
-            }
-
-            $pagination = $this->getPaginationFromPaginatedResponse($fromApi);
-            $pagination->advancePage();
-        } while ($pagination->hasMore());
     }
 
     /**

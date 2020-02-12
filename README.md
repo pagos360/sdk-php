@@ -1,8 +1,8 @@
-# Pagos360.com SDK PHP
+# Pagos360 SDK PHP
 
-SDK para realizar transacciones por medio de Pagos360.com
+SDK para realizar transacciones por medio de Pagos360
 
-Módulo para conexión con Pagos360.com
+Módulo para conexión con Pagos360
 
 - [Instalación](#instalación)
 - [Introducción](#introducción)
@@ -18,16 +18,12 @@ Módulo para conexión con Pagos360.com
 
     - [Crear](#crear)
     - [Buscar por id](#buscar-por-id)
-    - [Listar](#listar)
-    - [Listar con filtros](#listar-con-filtros)
     - [Resultados](#resultados)
 
   - [Solicitud de Débito](#solicitud-de-débito) (`DebitRequest`)
 
     - [Crear](#crear-1)
     - [Buscar por id](#buscar-por-id-1)
-    - [Listar](#listar-1)
-    - [Listar con filtros](#listar-con-filtros-1)
     - [Resultados](#resultados-1)
 
   - Adhesion (`Adhesion`)
@@ -52,7 +48,7 @@ Si bien el objetivo del SDK es simplificar el proceso de integración, no es un 
 
 ## Inicialización
 
-Para empezar a utilizar el SDK desde su código, se provee una clase `\Pagos360\Sdk`, la cual toma como único parámetro una _API KEY_ generada desde el menú de _Integraciones_ desde el portal web de Pagos360.com
+Para empezar a utilizar el SDK desde su código, se provee una clase `\Pagos360\Sdk`, la cual toma como único parámetro una _API KEY_ generada desde el menú de _Integraciones_ desde el portal web de Pagos360.
 
 ```php
 $sdk = new \Pagos360\Sdk(getenv('PAGOS360_API_KEY'));
@@ -66,31 +62,6 @@ var_dump($account);
 ```
 
 En caso que todo sea correcto, `$account` debería ser una instancia de la clase `\Pagos360\Models\Account`.
-
-## Paginación
-
-Aquellos endpoints que listan modelos devuelven un objeto del tipo `\Pagos360\PaginatedResponse`, el cual tiene dos metodos: `getPagination()` que devuelve un objeto de tipo `\Pagos360\Pagination` con la data de la paginación y `getData()` que contiene un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection` con todas las entidades correspondientes.
-
-## Filtros
-
-Los endpoints de listados también cuentan con la funcionalidad de poder aplicar filtros. Para esto se usa su respectiva clases de filtros (por ejemplo `PaymentRequestFilters`), la cual contiene constantes que asisten en la traduccion al tipo de filtro correspondiente.
-
-```
-$filters = new PaymentRequestFilters([
-    PaymentRequestFilters::STATE => "paid",
-    PaymentRequestFilters::CREATED_AT_GTE => new DateTimeImmutable('17-07-2018'),
-    PaymentRequestFilters::CREATED_AT_LTE => new DateTimeImmutable('17-07-2018'),
-]);
-```
-
-Como la plataforma de Pagos360.com se encuentra en desarrollo activo, es probable que en el futuro la API provea filtros que no esten soportados nativamente en este SDK. En ese caso, se puede proveer un filtro sin usar la constante, basandose en la documentación oficial. Por ejemplo:
-
-```
-$filters = new PaymentRequestFilters([
-    PaymentRequestFilters::STATE => "paid",
-    "filtro_nuevo" => "valor",
-]);
-```
 
 # Solicitud de Pago
 
@@ -112,7 +83,7 @@ $paymentRequest = $sdk->paymentRequests->create($paymentRequest);
 
 ### Excluir canales
 
-Para facilitar la exclusión de canales, se proveen constantes dentro de la clase `\Pagos360\Constants`. Al igual que los filtros, puede ser que en un futuro se agreguen más tipos de canales que aun no estén soportados en el SDK. En ese caso, se puede usar una string representando el nuevo valor.
+Para facilitar la exclusión de canales, se proveen constantes dentro de la clase `\Pagos360\Constants`. Como la plataforma de Pagos360 se encuentra en desarrollo activo, es probable que en el futuro se agreguen más tipos de canales que aun no estén soportados en el SDK. En ese caso, se puede usar una string representando el nuevo valor.
 
 ```php
 $paymentRequest->setExcludedChannelTypes([
@@ -128,56 +99,6 @@ $paymentRequest->setExcludedChannelTypes([
 ```php
 $paymentRequest = $sdk->paymentRequests->get(179960);
 ```
-
-## Listar
-
-[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/get-payment-request)
-
-```php
-$paginatedResponse = $sdk->paymentRequests->getPage(1);
-$paginationData = $paginatedResponse->getPagination();
-/** @var \Pagos360\Models\PaymentRequest[] $paymentRequests */
-$paymentRequests = $paginatedResponse->getData();
-
-var_dump($paymentRequests);
-var_dump($paginationData);
-```
-
-## Listar con filtros
-
-```php
-$filters = new PaymentRequestFilters([
-    PaymentRequestFilters::STATE => "paid",
-    PaymentRequestFilters::CREATED_AT_GTE => new DateTimeImmutable('yesterday'),
-    PaymentRequestFilters::CREATED_AT_LTE => new DateTimeImmutable('yesterday'),
-]);
-
-$paginatedPaymentRequests = $sdk->paymentRequests->getFiltereredPage(
-    $filters,
-    5,
-    25
-);
-/** @var \Pagos360\Models\PaymentRequest[] $paymentRequests */
-$paymentRequests = $paginatedPaymentRequests->getData();
-```
-
-### Filtros disponibles
-
-| Nombre                                     | Tipo     | Query param         |
-| ------------------------------------------ | -------- | ------------------- |
-| PaymentRequestFilters::EXTERNAL_REFERENCE  | string   | external_reference  |
-| PaymentRequestFilters::STATE               | string   | state               |
-| PaymentRequestFilters::CREATED_AT_LTE      | DateTime | created_at_lte      |
-| PaymentRequestFilters::CREATED_AT_GTE      | DateTime | created_at_gte      |
-| PaymentRequestFilters::FIRST_DUE_DATE_LTE  | DateTime | first_due_date_lte  |
-| PaymentRequestFilters::FIRST_DUE_DATE_GTE  | DateTime | first_due_date_gte  |
-| PaymentRequestFilters::FIRST_TOTAL_LTE     | float    | first_total_lte     |
-| PaymentRequestFilters::FIRST_TOTAL_GTE     | float    | first_total_gte     |
-| PaymentRequestFilters::SECOND_DUE_DATE_LTE | DateTime | second_due_date_lte |
-| PaymentRequestFilters::SECOND_DUE_DATE_GTE | DateTime | second_due_date_gte |
-| PaymentRequestFilters::SECOND_TOTAL_LTE    | float    | second_total_lte    |
-| PaymentRequestFilters::SECOND_TOTAL_GTE    | float    | second_total_gte    |
-| PaymentRequestFilters::PAYER_NAME          | string   | payer_name          |
 
 ## Resultados
 
@@ -255,53 +176,6 @@ $request->setAdhesion(new \Pagos360\Models\Adhesion(['id' => 25]))
 ```php
 $debitRequest = $sdk->debitRequests->get(182760);
 ```
-
-## Listar
-
-[Documentación](https://developers.pagos360.com/api/endpoints/debito-automatico/debit-request/get-debit-request)
-
-```php
-$paginatedResponse = $sdk->debitRequests->getPage(1);
-$paginationData = $paginatedResponse->getPagination();
-/** @var \Pagos360\Models\DebitRequest[] $debitRequests */
-$debitRequests = $paginatedResponse->getData();
-
-var_dump($debitRequests);
-var_dump($paginationData);
-```
-
-## Listar con filtros
-
-```php
-$filters = new \Pagos360\Filters\DebitRequestFilters([
-    \Pagos360\Filters\DebitRequestFilters::STATE => \Pagos360\Constants::DEBIT_REQUEST_PAID_STATE,
-]);
-$paginatedResponse = $sdk->debitRequests->getFilteredPage($filters, 1);
-$paginationData = $paginatedResponse->getPagination();
-/** @var \Pagos360\Models\DebitRequest[] $debitRequests */
-$debitRequests = $paginatedResponse->getData();
-
-var_dump($debitRequests);
-var_dump($paginationData);
-```
-
-### Filtros disponibles
-
-| Nombre                                    | Tipo     | Query param          |
-| ----------------------------------------- | -------- | -------------------- |
-| DebitRequestFilters::EXTERNAL_REFERENCE   | string   | external_reference   |
-| DebitRequestFilters::STATE                | string   | state                |
-| DebitRequestFilters::CREATED_AT_LTE       | DateTime | created_at_lte       |
-| DebitRequestFilters::CREATED_AT_GTE       | DateTime | created_at_gte       |
-| DebitRequestFilters::FIRST_DUE_DATE_LTE   | DateTime | first_due_date_lte   |
-| DebitRequestFilters::FIRST_DUE_DATE_GTE   | DateTime | first_due_date_gte   |
-| DebitRequestFilters::FIRST_TOTAL_LTE      | float    | first_total_lte      |
-| DebitRequestFilters::FIRST_TOTAL_GTE      | float    | first_total_gte      |
-| DebitRequestFilters::SECOND_DUE_DATE_LTE  | DateTime | second_due_date_lte  |
-| DebitRequestFilters::SECOND_DUE_DATE_GTE  | DateTime | second_due_date_gte  |
-| DebitRequestFilters::SECOND_TOTAL_LTE     | float    | second_total_lte     |
-| DebitRequestFilters::SECOND_TOTAL_GTE     | float    | second_total_gte     |
-| DebitRequestFilters::ADHESION_HOLDER_NAME | string   | adhesion_holder_name |
 
 ## Resultados
 

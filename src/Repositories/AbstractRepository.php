@@ -2,13 +2,10 @@
 
 namespace Pagos360\Repositories;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Exceptions\MissingRequiredInputException;
-use Pagos360\Filters\AbstractFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\AbstractModel;
 use Pagos360\Models\Adhesion;
-use Pagos360\Pagination;
 use Pagos360\RestClient;
 use Pagos360\Types;
 use Psr\Log\LoggerAwareTrait;
@@ -82,70 +79,6 @@ abstract class AbstractRepository
         }
 
         return [$blockPrefix => $serialized];
-    }
-
-    /**
-     * @param AbstractFilters|null $filters
-     * @return array
-     */
-    protected function parseFilters(?AbstractFilters $filters): array
-    {
-        if (empty($filters)) {
-            return [];
-        }
-
-        return $filters->toQueryParams();
-    }
-
-    /**
-     * @param int             $page
-     * @param int             $itemsPerPage
-     * @param AbstractFilters $filters
-     * @return array
-     */
-    protected function buildPagedQueryString(
-        int $page,
-        int $itemsPerPage,
-        ?AbstractFilters $filters
-    ): array {
-        $pagination = new Pagination($page, $itemsPerPage);
-        $parsedFilters = $this->parseFilters($filters);
-
-        return array_merge(
-            $parsedFilters,
-            $pagination->toQueryString()
-        );
-    }
-
-    /**
-     * @param string $modelClass
-     * @param array  $input
-     * @return ArrayCollection|AbstractModel[]
-     */
-    protected function parseDatafromPaginatedResponse(
-        string $modelClass,
-        array $input
-    ): ArrayCollection {
-        $data = new ArrayCollection();
-        foreach ($input['data'] as $entity) {
-            $data[] = ModelFactory::build($modelClass, $entity);
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param array $response
-     * @return Pagination
-     */
-    protected function getPaginationFromPaginatedResponse(
-        array $response
-    ): Pagination {
-        return new Pagination(
-            $response['current_page'],
-            $response['items_per_page'],
-            $response['total_count']
-        );
     }
 
     /**

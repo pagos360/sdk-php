@@ -4,11 +4,9 @@ namespace Pagos360\Repositories;
 
 use Pagos360\Constants;
 use Pagos360\Exceptions\DebitRequests\DebitRequestNotPaidException;
-use Pagos360\Filters\DebitRequestFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\Result;
-use Pagos360\PaginatedResponse;
 use Pagos360\Types;
 
 class DebitRequestRepository extends AbstractRepository
@@ -16,7 +14,6 @@ class DebitRequestRepository extends AbstractRepository
     const MODEL = DebitRequest::class;
     const BLOCK_PREFIX = 'debit_request';
     const API_URI = 'debit-request';
-    const DEFAULT_ITEMS_PER_PAGE = 25;
 
     const EDITABLE = false;
 
@@ -76,69 +73,6 @@ class DebitRequestRepository extends AbstractRepository
         $fromApi = $this->restClient->get($url);
 
         return ModelFactory::build(DebitRequest::class, $fromApi);
-    }
-
-    /**
-     * @param int $page
-     * @param int $itemsPerPage
-     * @return PaginatedResponse
-     * @todo Abstract some of this?
-     */
-    public function getPage(
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            null
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
-    }
-
-    /**
-     * @param DebitRequestFilters|null $filters
-     * @param int                      $page
-     * @param int                      $itemsPerPage
-     * @return PaginatedResponse
-     */
-    public function getFilteredPage(
-        DebitRequestFilters $filters = null,
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            $filters
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
     }
 
     /**
