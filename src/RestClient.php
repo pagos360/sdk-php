@@ -10,10 +10,11 @@ use Pagos360\Exceptions\RestClient\ForbiddenException;
 use Pagos360\Exceptions\RestClient\UnauthorizedException;
 use Pagos360\Exceptions\RestClient\UnexpectedStatusCode;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-class RestClient
+class RestClient implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 

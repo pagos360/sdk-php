@@ -225,24 +225,32 @@ $adhesion = $sdk->adhesions->get(25);
 
 # Logs
 
-La clase SDK, RestClient, y los repositorios implementan la interfaz `LoggerAwareInterface` del [PSR-3
-el `logger` va a ser replicado al resto de las clases internas.
+La clase SDK, RestClient, y los repositorios implementan la interfaz `LoggerAwareInterface` del [PSR-3](https://www.php-fig.org/psr/psr-3/).
 
 ```php
 $logger = new \Monolog\Logger('Pagos360 SDK');
 $logger->pushHandler(new \Monolog\Handler\StreamHandler(STDOUT));
 
 $sdk->setLogger($logger);
-````
+```
 
 En caso de querer usar distintos loggers para las distintas partes, se puede especificar de la siguiente forma:
 
 ```php
 $restClientLogger = new \Monolog\Logger('Pagos360 RestClient');
-$sdk->getRestClient()->attachLogger($restClientLogger);
+$sdk->getRestClient()->setLogger($restClientLogger);
 
 $paymentRequestLogger = new \Monolog\Logger('Pagos360 PaymentRequest');
-$sdk->paymentRequests->attachLogger($paymentRequestLogger);
+$sdk->paymentRequests->setLogger($paymentRequestLogger);
 ```
 
-En estos ejemplos se usa la libreria `Monolog`, pero se puede usar cualquier libreria que implemente las reglas del [PSR-3](https://www.php-fig.org/psr/psr-3/).
+Tambien existe el metodo `setLoggerAndPropagate` en el SDK que replica el logger al RestClient y todos los repositorios.
+```php
+$logger = new \Monolog\Logger('Pagos360 SDK');
+$logger->pushHandler(new \Monolog\Handler\StreamHandler(STDOUT));
+
+$sdk->setLoggerAndPropagate($logger);
+```
+
+En estos ejemplos se usa la libreria `Monolog`, pero se puede usar cualquier libreria que implemente los metodos declarados en `LoggerInterface` de dicho PSR.
+````

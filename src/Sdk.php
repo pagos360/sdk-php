@@ -14,10 +14,13 @@ use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
 use Pagos360\Repositories\SettlementReportRepository;
 use Psr\Log\LoggerAwareInterface;
+use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
 class Sdk implements LoggerAwareInterface
 {
+    use LoggerAwareTrait;
+
     const VERSION = '0.0.0';
     const BASE_URL = 'https://api.pagos360.com';
 
@@ -72,11 +75,6 @@ class Sdk implements LoggerAwareInterface
     public $cardDebitRequests;
 
     /**
-     * @var LoggerInterface|null
-     */
-    protected $logger;
-
-    /**
      * @param string $apiKey
      */
     public function __construct(string $apiKey)
@@ -127,7 +125,7 @@ class Sdk implements LoggerAwareInterface
     /**
      * @param LoggerInterface $logger
      */
-    public function setLogger(LoggerInterface $logger)
+    public function setLoggerAndPropagate(LoggerInterface $logger)
     {
         $this->logger = $logger;
         $this->restClient->setLogger($logger);

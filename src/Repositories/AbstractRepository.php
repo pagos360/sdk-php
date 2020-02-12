@@ -8,9 +8,10 @@ use Pagos360\Models\AbstractModel;
 use Pagos360\Models\Adhesion;
 use Pagos360\RestClient;
 use Pagos360\Types;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
-abstract class AbstractRepository
+abstract class AbstractRepository implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
