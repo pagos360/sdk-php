@@ -6,6 +6,7 @@ use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
 use Pagos360\Models\CardAdhesion;
+use Pagos360\Models\CardDebitRequest;
 use Pagos360\Models\ChargebackData;
 use Pagos360\Models\ChargebackReport;
 use Pagos360\Models\CollectionData;
@@ -21,6 +22,7 @@ use Pagos360\Repositories\AbstractRepository;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
 use Pagos360\Repositories\CardAdhesionRepository;
+use Pagos360\Repositories\CardDebitRequestRepository;
 use Pagos360\Repositories\ChargebackDataRepository;
 use Pagos360\Repositories\ChargebackReportRepository;
 use Pagos360\Repositories\CollectionDataRepository;
@@ -81,6 +83,9 @@ class ModelFactory
                 break;
             case CardAdhesion::class:
                 $fields = CardAdhesionRepository::FIELDS;
+                break;
+            case CardDebitRequest::class:
+                $fields = CardDebitRequestRepository::FIELDS;
                 break;
             default:
                 throw new \InvalidArgumentException("Can't build model $model");
@@ -163,8 +168,12 @@ class ModelFactory
         array $fieldDefinition,
         string $key
     ): string {
-        if ($fieldDefinition[AbstractRepository::TYPE] === Types::ADHESION) {
-            return 'adhesion_id';
+        $definedType = $fieldDefinition[AbstractRepository::TYPE];
+        switch ($definedType) {
+            case Types::ADHESION:
+                return 'adhesion_id';
+            case Types::CARD_ADHESION:
+                return 'card_adhesion_id';
         }
 
         return self::getLookupAttribute($fieldDefinition, $key);
@@ -225,16 +234,10 @@ class ModelFactory
                 return self::build(PaymentMetadata::class, $value);
             case Types::RESULTS:
                 return self::buildCollection(Types::RESULTS, $value);
-            case Types::COLLECTION_REPORT:
-                return self::build(CollectionReport::class, $value);
             case Types::COLLECTION_DATA:
                 return self::buildCollection(CollectionData::class, $value);
-            case Types::SETTLEMENT_REPORT:
-                return self::build(SettlementReport::class, $value);
             case Types::SETTLEMENT_DATA:
                 return self::buildCollection(SettlementData::class, $value);
-            case Types::CHARGEBACK_REPORT:
-                return self::build(ChargebackReport::class, $value);
             case Types::CHARGEBACK_DATA:
                 return self::buildCollection(ChargebackData::class, $value);
             case Types::CARD_ADHESION:

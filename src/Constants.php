@@ -23,6 +23,16 @@ abstract class Constants
     const DEBIT_REQUEST_REVERTED_STATE = 'reverted';
 
     /**
+     * Estados de una Solicitud de Débito en Tarjeta.
+     */
+    const CARD_DEBIT_REQUEST_PAID_STATE = 'paid';
+    const CARD_DEBIT_REQUEST_PENDING_STATE = 'pending';
+    const CARD_DEBIT_REQUEST_EXPIRED_STATE = 'expired';
+    const CARD_DEBIT_REQUEST_CANCELED_STATE = 'canceled';
+    const CARD_DEBIT_REQUEST_REJECTED_STATE = 'rejected';
+    const CARD_DEBIT_REQUEST_REVERTED_STATE = 'reverted';
+
+    /**
      * Estados de una Adhesion.
      */
     const ADHESION_STATE_PENDING_TO_SIGN = 'pending_to_sign';

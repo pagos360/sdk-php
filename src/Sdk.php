@@ -7,6 +7,7 @@ use GuzzleHttp\RequestOptions as GuzzleRequestOptions;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
 use Pagos360\Repositories\CardAdhesionRepository;
+use Pagos360\Repositories\CardDebitRequestRepository;
 use Pagos360\Repositories\ChargebackReportRepository;
 use Pagos360\Repositories\CollectionReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
@@ -66,6 +67,11 @@ class Sdk implements LoggerAwareInterface
     public $cardAdhesions;
 
     /**
+     * @var CardDebitRequestRepository
+     */
+    public $cardDebitRequests;
+
+    /**
      * @var LoggerInterface|null
      */
     protected $logger;
@@ -97,6 +103,7 @@ class Sdk implements LoggerAwareInterface
         $this->settlementReports = new SettlementReportRepository($this->restClient);
         $this->chargebackReports = new ChargebackReportRepository($this->restClient);
         $this->cardAdhesions = new CardAdhesionRepository($this->restClient);
+        $this->cardDebitRequests = new CardDebitRequestRepository($this->restClient);
     }
 
     /**
@@ -131,5 +138,6 @@ class Sdk implements LoggerAwareInterface
         $this->settlementReports->setLogger($logger);
         $this->chargebackReports->setLogger($logger);
         $this->cardAdhesions->setLogger($logger);
+        $this->cardDebitRequests->setLogger($logger);
     }
 }
