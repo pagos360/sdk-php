@@ -18,11 +18,8 @@ class Types
     const ADHESION = 'adhesion';
     const HOLDER_DATA = 'holderData';
     const RESULTS = 'results';
-    const COLLECTION_REPORT = 'collectionReport';
     const COLLECTION_DATA = 'collectionData';
-    const SETTLEMENT_REPORT = 'settlementReport';
     const SETTLEMENT_DATA = 'settlementData';
-    const CHARGEBACK_REPORT = 'chargebackReport';
     const CHARGEBACK_DATA = 'chargebackData';
     const PAYMENT_METADATA = 'paymentMetadata';
     const CARD_ADHESION = 'cardAdhesion';
