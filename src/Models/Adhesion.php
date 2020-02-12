@@ -14,7 +14,6 @@ class Adhesion extends AbstractModel
     /**
      * Estado de la Adhesión.
      * Los posibles valores son: "pending_to_sign", "signed", "canceled".
-     * http://bit.ly/2X8rqVP
      *
      * @var string
      */

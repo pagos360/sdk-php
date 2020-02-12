@@ -17,7 +17,6 @@ class DebitRequest extends AbstractModel
      * Estado de la Solicitud de Débito.
      * Los posibles valores son: "pending", "paid", "expired", "reverted",
      * "canceled", "rejected".
-     * Documentación pública: http://bit.ly/30U4qwk
      *
      * @var string
      */
