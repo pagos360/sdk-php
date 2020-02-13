@@ -4,9 +4,13 @@ namespace Tests;
 
 use Pagos360\ModelFactory;
 use Pagos360\Models\PaymentRequest;
+use PHPUnit\Framework\TestCase;
 
-class ModelFactoryTest extends \PHPUnit\Framework\TestCase
+class ModelFactoryTest extends TestCase
 {
+    /**
+     * @return array
+     */
     protected function mockApiResponse(): array
     {
         $json = <<<JSON

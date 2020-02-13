@@ -10,6 +10,9 @@ use Tests\AbstractTestCase;
 
 class PaymentRequestRepositoryTest extends AbstractTestCase
 {
+    /**
+     * @var array
+     */
     private $mockedResponse = [
         'id' => 1,
         'type' => "payment_request",
@@ -26,9 +29,12 @@ class PaymentRequestRepositoryTest extends AbstractTestCase
         'checkout_url' => "https://checkout.pagos360.com/payment-request/bcd5855d-2313-11e9-b4f6-0a458c07b878",
         'barcode_url' => "https://api.pagos360.com/payment-request/barcode/bcd5855d-2313-11e9-b4f6-0a458c07b878",
         'pdf_url' => "https://api.pagos360.com/payment-request/pdf/bcd5855d-2313-11e9-b4f6-0a458c07b878",
-        'request_result' => []
+        'request_result' => [],
     ];
 
+    /**
+     * @var array
+     */
     private $collectedResult = [
         "id" => 24135,
         "type" => "collected_payment_request_result",
