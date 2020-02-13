@@ -21,6 +21,18 @@ class ResultRepository extends AbstractRepository
             self::TYPE => Types::STRING,
             self::FLAG_MAYBE => true,
         ],
+        'paidAt' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::DATETIME,
+            self::FLAG_MAYBE => true,
+            self::PROPERTY_PATH => 'paid_at',
+        ],
+        'createdAt' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::DATETIME,
+            self::FLAG_MAYBE => true,
+            self::PROPERTY_PATH => 'created_at',
+        ],
         'availableAt' => [
             self::FLAG_READONLY => true,
             self::TYPE => Types::DATETIME,

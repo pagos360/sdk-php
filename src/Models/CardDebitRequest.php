@@ -2,6 +2,8 @@
 
 namespace Pagos360\Models;
 
+use Doctrine\Common\Collections\ArrayCollection;
+
 class CardDebitRequest extends AbstractModel
 {
     /**
@@ -75,6 +77,13 @@ class CardDebitRequest extends AbstractModel
      * @var CardAdhesion
      */
     protected $cardAdhesion;
+
+    /**
+     * Arreglo con el Resultado de la Solicitud de Débito en Tarjeta.
+     *
+     * @var ArrayCollection|null
+     */
+    protected $results;
 
     /**
      * @return int
@@ -214,5 +223,13 @@ class CardDebitRequest extends AbstractModel
     {
         $this->cardAdhesion = $cardAdhesion;
         return $this;
+    }
+
+    /**
+     * @return ArrayCollection|null
+     */
+    public function getResults(): ?ArrayCollection
+    {
+        return $this->results;
     }
 }

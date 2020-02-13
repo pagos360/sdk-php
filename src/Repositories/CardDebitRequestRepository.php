@@ -63,5 +63,11 @@ class CardDebitRequestRepository extends AbstractRepository
             self::TYPE => Types::CARD_ADHESION,
             self::FLAG_REQUIRED => true,
         ],
+        "results" => [
+            self::PROPERTY_PATH => "request_result",
+            self::TYPE => Types::RESULTS,
+            self::FLAG_MAYBE => true,
+            self::FLAG_READONLY => true,
+        ],
     ];
 }

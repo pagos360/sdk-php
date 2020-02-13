@@ -113,9 +113,10 @@ class PaymentRequestRepository extends AbstractRepository
             self::PROPERTY_PATH => 'holder_data',
         ],
         'results' => [
-            self::FLAG_READONLY => true,
-            self::TYPE => Types::RESULTS,
             self::PROPERTY_PATH => 'request_result',
+            self::TYPE => Types::RESULTS,
+            self::FLAG_MAYBE => true,
+            self::FLAG_READONLY => true,
         ],
     ];
 

@@ -84,6 +84,16 @@ class Result extends AbstractModel
     protected $paymentMetadata;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    protected $paidAt;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    protected $createdAt;
+
+    /**
      * En caso que sea una Solicitud de Debito, este campo indica la fecha y
      * hora en la que fue rechazada.
      *
@@ -185,6 +195,14 @@ class Result extends AbstractModel
     public function getPaymentMetadata(): ?PaymentMetadata
     {
         return $this->paymentMetadata;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPaidAt(): ?\DateTimeImmutable
+    {
+        return $this->paidAt;
     }
 
     /**
