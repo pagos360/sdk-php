@@ -30,3 +30,7 @@
 - \Pagos360\Repositories\PaymentRequestRepository::DEFAULT_ITEMS_PER_PAGE
 - \Pagos360\Repositories\DebitRequestRepository::DEFAULT_ITEMS_PER_PAGE
 - \Pagos360\Repositories\AdhesionRepository::DEFAULT_ITEMS_PER_PAGE
+
+## Modificaciones:
+
+- El metodo `setLogger()` de la clase `\Pagos360\Sdk` solo configura el logger para dicha clase. En caso de querer configurar el mismo logger para todas las clases, se puede usar el nuevo metodo `setLoggerAndPropagate()`.
