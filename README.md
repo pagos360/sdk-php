@@ -67,7 +67,7 @@ En caso que todo sea correcto, `$account` debería ser una instancia de la clase
 
 ## Crear
 
-[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/post_payment-request)
+[Documentación](https://developers.pagos360.com/endpoints/payment-request/post_payment-request)
 
 ```php
 $paymentRequest = new \Pagos360\Models\PaymentRequest();
@@ -94,7 +94,7 @@ $paymentRequest->setExcludedChannelTypes([
 
 ## Buscar por id
 
-[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/get_payment-request-id)
+[Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id)
 
 ```php
 $paymentRequest = $sdk->paymentRequests->get(179960);
@@ -102,7 +102,7 @@ $paymentRequest = $sdk->paymentRequests->get(179960);
 
 ## Resultados
 
-[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/conceptos-generales#atributos-del-objeto-request_result)
+[Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id#atributos-del-objeto-request_result)
 
 Los resultados de una Solicitud de Pago estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
 
@@ -150,7 +150,7 @@ $sdk->paymentRequests->assertIsPaid($paymentRequest);
 
 ## Crear
 
-[Documentación](https://developers.pagos360.com/api/endpoints/debito-automatico/debit-request/post-debit-request)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/post-debit-request)
 
 ```php
 $request = new \Pagos360\Models\DebitRequest();
@@ -171,7 +171,7 @@ $request->setAdhesion(new \Pagos360\Models\Adhesion(['id' => 25]))
 
 ## Buscar por id
 
-[Documentación](https://developers.pagos360.com/api/endpoints/debito-automatico/debit-request/get-debit-request-id)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/get-debit-request-id)
 
 ```php
 $debitRequest = $sdk->debitRequests->get(182760);
@@ -179,7 +179,7 @@ $debitRequest = $sdk->debitRequests->get(182760);
 
 ## Resultados
 
-[Documentación](https://developers.pagos360.com/api/endpoints/payment-request/conceptos-generales#atributos-del-objeto-request_result)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/get-debit-request-id#atributos-del-objeto-request_result)
 
 Los resultados de una Solicitud de Débito estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
 
