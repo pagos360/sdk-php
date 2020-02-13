@@ -34,4 +34,36 @@ class SettlementData extends AbstractModel
      * @var float
      */
     protected $debit;
+
+    /**
+     * @return int
+     */
+    public function getRequestId(): int
+    {
+        return $this->requestId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalReference(): string
+    {
+        return $this->externalReference;
+    }
+
+    /**
+     * @return float
+     */
+    public function getCredit(): float
+    {
+        return $this->credit;
+    }
+
+    /**
+     * @return float
+     */
+    public function getDebit(): float
+    {
+        return $this->debit;
+    }
 }

@@ -33,4 +33,36 @@ class ChargebackReport extends AbstractModel
      * @var ArrayCollection
      */
     protected $data;
+
+    /**
+     * @return String
+     */
+    public function getAccountId(): String
+    {
+        return $this->accountId;
+    }
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getReportDate(): \DateTimeImmutable
+    {
+        return $this->reportDate;
+    }
+
+    /**
+     * @return Float
+     */
+    public function getTotalChargeback(): Float
+    {
+        return $this->totalChargeback;
+    }
+
+    /**
+     * @return ArrayCollection
+     */
+    public function getData(): ArrayCollection
+    {
+        return $this->data;
+    }
 }

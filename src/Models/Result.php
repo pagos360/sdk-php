@@ -86,12 +86,12 @@ class Result extends AbstractModel
     /**
      * @var \DateTimeImmutable|null
      */
-    protected $paidAt;
+    protected $createdAt;
 
     /**
      * @var \DateTimeImmutable|null
      */
-    protected $createdAt;
+    protected $paidAt;
 
     /**
      * En caso que sea una Solicitud de Debito, este campo indica la fecha y
@@ -195,6 +195,14 @@ class Result extends AbstractModel
     public function getPaymentMetadata(): ?PaymentMetadata
     {
         return $this->paymentMetadata;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
     }
 
     /**

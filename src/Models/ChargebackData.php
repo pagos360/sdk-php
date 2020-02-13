@@ -55,4 +55,60 @@ class ChargebackData extends AbstractModel
      * @var float
      */
     protected $revertedAmount;
+
+    /**
+     * @return \DateTimeImmutable
+     */
+    public function getInformedDate(): \DateTimeImmutable
+    {
+        return $this->informedDate;
+    }
+
+    /**
+     * @return int
+     */
+    public function getRequestId(): int
+    {
+        return $this->requestId;
+    }
+
+    /**
+     * @return string
+     */
+    public function getExternalReference(): string
+    {
+        return $this->externalReference;
+    }
+
+    /**
+     * @return string
+     */
+    public function getPayerName(): string
+    {
+        return $this->payerName;
+    }
+
+    /**
+     * @return string
+     */
+    public function getDescription(): string
+    {
+        return $this->description;
+    }
+
+    /**
+     * @return string
+     */
+    public function getChannel(): string
+    {
+        return $this->channel;
+    }
+
+    /**
+     * @return float
+     */
+    public function getRevertedAmount(): float
+    {
+        return $this->revertedAmount;
+    }
 }
