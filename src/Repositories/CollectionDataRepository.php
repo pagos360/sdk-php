@@ -24,6 +24,7 @@ class CollectionDataRepository extends AbstractRepository
             self::PROPERTY_PATH => "external_reference",
             self::TYPE => Types::STRING,
             self::FLAG_READONLY => true,
+            self::FLAG_MAYBE => true,
         ],
         "payerName" => [
             self::PROPERTY_PATH => "payer_name",

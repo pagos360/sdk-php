@@ -48,7 +48,7 @@ class SettlementReportRepository extends AbstractRepository
             self::FLAG_READONLY => true,
         ],
         "data" => [
-            self::TYPE => Types::ARRAY,
+            self::TYPE => Types::SETTLEMENT_DATA,
             self::FLAG_READONLY => true,
         ],
     ];

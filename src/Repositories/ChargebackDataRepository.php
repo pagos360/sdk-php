@@ -24,6 +24,7 @@ class ChargebackDataRepository extends AbstractRepository
             self::TYPE => Types::STRING,
             self::FLAG_READONLY => true,
             self::PROPERTY_PATH => "external_reference",
+            self::FLAG_MAYBE => true,
         ],
         "payerName" => [
             self::TYPE => Types::STRING,

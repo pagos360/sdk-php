@@ -12,22 +12,21 @@ class SettlementDataRepository extends AbstractRepository
     const EDITABLE = false;
     const FIELDS = [
         "requestId" => [
-            self::PROPERTY_PATH => "requestId",
+            self::PROPERTY_PATH => "request_id",
             self::FLAG_READONLY => true,
             self::TYPE => Types::INT,
         ],
         "externalReference" => [
-            self::PROPERTY_PATH => "externalReference",
+            self::PROPERTY_PATH => "external_reference",
             self::FLAG_READONLY => true,
             self::TYPE => Types::STRING,
+            self::FLAG_MAYBE => true,
         ],
         "credit" => [
-            self::PROPERTY_PATH => "credit",
             self::FLAG_READONLY => true,
             self::TYPE => Types::FLOAT,
         ],
         "debit" => [
-            self::PROPERTY_PATH => "debit",
             self::FLAG_READONLY => true,
             self::TYPE => Types::FLOAT,
         ],

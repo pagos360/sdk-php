@@ -32,6 +32,7 @@ use Pagos360\Repositories\HolderDataRepository;
 use Pagos360\Repositories\PaymentMetadataRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
 use Pagos360\Repositories\ResultRepository;
+use Pagos360\Repositories\SettlementDataRepository;
 use Pagos360\Repositories\SettlementReportRepository;
 
 class ModelFactory
@@ -74,6 +75,9 @@ class ModelFactory
                 break;
             case SettlementReport::class:
                 $fields = SettlementReportRepository::FIELDS;
+                break;
+            case SettlementData::class:
+                $fields = SettlementDataRepository::FIELDS;
                 break;
             case ChargebackReport::class:
                 $fields = ChargebackReportRepository::FIELDS;
@@ -235,11 +239,11 @@ class ModelFactory
             case Types::RESULTS:
                 return self::buildCollection(Types::RESULTS, $value);
             case Types::COLLECTION_DATA:
-                return self::buildCollection(CollectionData::class, $value);
+                return self::buildCollection(Types::COLLECTION_DATA, $value);
             case Types::SETTLEMENT_DATA:
-                return self::buildCollection(SettlementData::class, $value);
+                return self::buildCollection(Types::SETTLEMENT_DATA, $value);
             case Types::CHARGEBACK_DATA:
-                return self::buildCollection(ChargebackData::class, $value);
+                return self::buildCollection(Types::CHARGEBACK_DATA, $value);
             case Types::CARD_ADHESION:
                 return self::build(CardAdhesion::class, $value);
             case Types::INT:

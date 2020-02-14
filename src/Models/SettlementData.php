@@ -17,7 +17,7 @@ class SettlementData extends AbstractModel
      * operación. Algunos valores comunmente utilizados son: ID de Cliente, DNI,
      * CUIT, ID de venta o Nro. de Factura entre otros.
      *
-     * @var string
+     * @var string|null
      */
     protected $externalReference;
 
@@ -44,9 +44,9 @@ class SettlementData extends AbstractModel
     }
 
     /**
-     * @return string
+     * @return string|null
      */
-    public function getExternalReference(): string
+    public function getExternalReference(): ?string
     {
         return $this->externalReference;
     }
