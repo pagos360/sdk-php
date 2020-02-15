@@ -50,10 +50,4 @@ abstract class Constants
     const CHANNEL_DEBIT_CARD = 'debit_card';
     const CHANNEL_NON_BANKING = 'non_banking';
     const CHANNEL_BANKING = 'banking';
-
-    /**
-     * Tipos de Cuenta en Pagos360
-     */
-    const ACCOUNT_CURRENT = 'current_account';
-    const ACCOUNT_CONSOLIDATED = 'consolidated_account';
 }

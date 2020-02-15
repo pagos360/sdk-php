@@ -80,6 +80,10 @@ class AdhesionRepository extends AbstractRepository
             self::PROPERTY_PATH => 'state_comment',
             self::FLAG_MAYBE => true,
         ],
+        'metadata' => [
+            self::TYPE => Types::ARRAY, // @todo review
+            self::FLAG_MAYBE => true,
+        ],
     ];
 
     /**
@@ -91,7 +95,7 @@ class AdhesionRepository extends AbstractRepository
         $url = sprintf('%s/%s', self::API_URI, $id);
         $fromApi = $this->restClient->get($url);
 
-        return ModelFactory::build(Adhesion::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**
@@ -108,6 +112,6 @@ class AdhesionRepository extends AbstractRepository
 
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
-        return ModelFactory::build(Adhesion::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 }

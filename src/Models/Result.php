@@ -110,6 +110,11 @@ class Result extends AbstractModel
     protected $stateComment;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    protected $revertedAt;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -227,5 +232,13 @@ class Result extends AbstractModel
     public function getStateComment(): ?string
     {
         return $this->stateComment;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getRevertedAt(): ?\DateTimeImmutable
+    {
+        return $this->revertedAt;
     }
 }

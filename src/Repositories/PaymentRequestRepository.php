@@ -129,7 +129,7 @@ class PaymentRequestRepository extends AbstractRepository
         $url = sprintf('%s/%s', self::API_URI, $id);
         $fromApi = $this->restClient->get($url);
 
-        return ModelFactory::build(PaymentRequest::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**
@@ -147,7 +147,7 @@ class PaymentRequestRepository extends AbstractRepository
 
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
-        return ModelFactory::build(PaymentRequest::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**

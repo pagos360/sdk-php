@@ -101,6 +101,14 @@ class Adhesion extends AbstractModel
      */
     protected $stateComment;
 
+    /**
+     * Objeto JSON que se puede utilizar para guardar atributos adicionales en
+     * la adhesion y poder sincronizar con tus sistemas de backend. Pagos360 no
+     * utiliza este objeto.
+     *
+     * @var array|null
+     */
+    protected $metadata;
 
     /**
      * @return int
@@ -284,5 +292,23 @@ class Adhesion extends AbstractModel
     public function getStateComment(): ?string
     {
         return $this->stateComment;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @param array|null $metadata
+     * @return self
+     */
+    public function setMetadata(?array $metadata): self
+    {
+        $this->metadata = $metadata;
+        return $this;
     }
 }

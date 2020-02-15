@@ -2,6 +2,8 @@
 
 ## Metodos eliminados
 
+### Repositorios
+
 - \Pagos360\Repositories\PaymentRequestRepository:
   - getPage()
   - getFilteredPage()
@@ -15,6 +17,15 @@
 - \Pagos360\Repositories\AbstractRepository:
   - getPage()
   - getFilteredPage()
+
+### Modelos
+
+- \Pagos360\Models\Account:
+  - getType()
+  - getAvailableChannelTypes()
+- \Pagos360\Models\DebitRequest:
+  - getDescription()
+  - setDescription()
 
 ## Clases (y sus respectivas constantes y metodos) elimadas:
 

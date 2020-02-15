@@ -92,5 +92,11 @@ class ResultRepository extends AbstractRepository
             self::FLAG_MAYBE => true,
             self::PROPERTY_PATH => 'state_comment',
         ],
+        'revertedAt' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::DATETIME,
+            self::FLAG_MAYBE => true,
+            self::PROPERTY_PATH => 'reverted_at',
+        ],
     ];
 }

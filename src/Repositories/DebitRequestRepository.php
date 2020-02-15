@@ -53,8 +53,9 @@ class DebitRequestRepository extends AbstractRepository
             self::TYPE => Types::FLOAT,
             self::PROPERTY_PATH => 'second_total',
         ],
-        'description' => [
-            self::TYPE => Types::STRING,
+        'metadata' => [
+            self::TYPE => Types::ARRAY, // @todo review
+            self::FLAG_MAYBE => true,
         ],
         'results' => [
             self::FLAG_READONLY => true,
@@ -72,7 +73,7 @@ class DebitRequestRepository extends AbstractRepository
         $url = sprintf('%s/%s', self::API_URI, $id);
         $fromApi = $this->restClient->get($url);
 
-        return ModelFactory::build(DebitRequest::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**
@@ -113,7 +114,7 @@ class DebitRequestRepository extends AbstractRepository
 
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
-        return ModelFactory::build(DebitRequest::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**
