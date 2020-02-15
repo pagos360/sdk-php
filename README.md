@@ -2,34 +2,58 @@
 
 SDK para realizar transacciones por medio de Pagos360
 
-Módulo para conexión con Pagos360
-
 - [Instalación](#instalación)
 - [Introducción](#introducción)
 
   - [Inicialización](#inicialización)
-  - [Paginación](#paginación)
-  - [Filtros](#filtros)
-  - [Resultados](#resultados)
 
-- Modelos
+- [Modelos](#modelos)
 
   - [Solicitud de Pago](#solicitud-de-pago) (`PaymentRequest`)
 
     - [Crear](#crear)
     - [Buscar por id](#buscar-por-id)
     - [Resultados](#resultados)
+    - [Funciones de utilidad](#funciones-de-utilidad)
 
-  - [Solicitud de Débito](#solicitud-de-débito) (`DebitRequest`)
+  - [Solicitud de Débito en CBU](#solicitud-de-débito-en-cbu) (`DebitRequest`)
 
     - [Crear](#crear-1)
     - [Buscar por id](#buscar-por-id-1)
     - [Resultados](#resultados-1)
 
-  - Adhesion (`Adhesion`)
-  - Cuenta (`Account`)
+  - [Adhesion en CBU](#adhesion-en-cbu) (`Adhesion`)
 
-- Otros
+    - [Crear](#crear-2)
+    - [Buscar por id](#buscar-por-id-2)
+    - [Cancelar](#cancelar)
+
+  - [Solicitud de Débito en Tarjeta](#solicitud-de-débito-en-tarjeta) (`CardDebitRequest`)
+
+    - [Crear](#crear-3)
+    - [Buscar por id](#buscar-por-id-3)
+    - [Resultados](#resultados-2)
+
+  - [Adhesion en Tarjeta](#adhesion-en-tarjeta) (`CardAdhesion`)
+
+    - [Crear](#crear-4)
+    - [Buscar por id](#buscar-por-id-4)
+    - [Cancelar](#cancelar-1)
+
+  - [Reporte de Cobranza](#reporte-de-cobranza) (`CollectionReport`)
+    - [Buscar por fecha](#buscar-por-fecha)
+    - [Datos](#datos)
+  - [Reporte de Reversiones](#reporte-de-reversiones) (`ChargebackReport`)
+    - [Buscar por fecha](#buscar-por-fecha-1)
+    - [Datos](#datos-1)
+  - [Reporte de Rendicion](#reporte-de-rendicion) (`SettlementReport`)
+
+    - [Buscar por fecha](#buscar-por-fecha-2)
+    - [Datos](#datos-2)
+
+  - [Cuenta](#cuenta) (`Account`)
+
+- [Otros](#otros)
   - [Logs](#logs)
 
 # Instalación
@@ -63,9 +87,13 @@ var_dump($account);
 
 En caso que todo sea correcto, `$account` debería ser una instancia de la clase `\Pagos360\Models\Account`.
 
-# Solicitud de Pago
+# Modelos
 
-## Crear
+## Solicitud de Pago
+
+[Conceptos generales](https://developers.pagos360.com/endpoints/payment-request/conceptos-generales)
+
+### Crear
 
 [Documentación](https://developers.pagos360.com/endpoints/payment-request/post_payment-request)
 
@@ -81,7 +109,7 @@ $paymentRequest
 $paymentRequest = $sdk->paymentRequests->create($paymentRequest);
 ```
 
-### Excluir canales
+#### Excluir canales
 
 Para facilitar la exclusión de canales, se proveen constantes dentro de la clase `\Pagos360\Constants`. Como la plataforma de Pagos360 se encuentra en desarrollo activo, es probable que en el futuro se agreguen más tipos de canales que aun no estén soportados en el SDK. En ese caso, se puede usar una string representando el nuevo valor.
 
@@ -92,7 +120,7 @@ $paymentRequest->setExcludedChannelTypes([
 ]);
 ```
 
-## Buscar por id
+### Buscar por id
 
 [Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id)
 
@@ -100,11 +128,11 @@ $paymentRequest->setExcludedChannelTypes([
 $paymentRequest = $sdk->paymentRequests->get(179960);
 ```
 
-## Resultados
+#### Resultados
 
 [Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id#atributos-del-objeto-request_result)
 
-Los resultados de una Solicitud de Pago estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
+Los resultados de una Solicitud de Pago estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
 
 ```php
 $paymentRequest = $sdk->paymentRequests->get(234741);
@@ -130,9 +158,9 @@ if (!empty($metadata)) {
 }
 ```
 
-## Funciones de utilidad
+### Funciones de utilidad
 
-### Verificar que la solicitud haya sido pagada
+#### Verificar que la solicitud haya sido pagada
 
 ```php
 $paymentRequest = $sdk->paymentRequests->get(179960);
@@ -146,9 +174,11 @@ $paymentRequest = $sdk->paymentRequests->get(179960);
 $sdk->paymentRequests->assertIsPaid($paymentRequest);
 ```
 
-# Solicitud de Débito
+## Solicitud de Débito en CBU
 
-## Crear
+[Conceptos generales](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/conceptos-generales)
+
+### Crear
 
 [Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/post-debit-request)
 
@@ -169,7 +199,7 @@ Si bien es recomendable obtener la adhesion y verificar que siga en el estado fi
 $request->setAdhesion(new \Pagos360\Models\Adhesion(['id' => 25]))
 ```
 
-## Buscar por id
+### Buscar por id
 
 [Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/get-debit-request-id)
 
@@ -177,11 +207,11 @@ $request->setAdhesion(new \Pagos360\Models\Adhesion(['id' => 25]))
 $debitRequest = $sdk->debitRequests->get(182760);
 ```
 
-## Resultados
+#### Resultados
 
 [Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/get-debit-request-id#atributos-del-objeto-request_result)
 
-Los resultados de una Solicitud de Débito estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, la cual contiene una colección de instancias del model `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
+Los resultados de una Solicitud de Débito estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `Result`. En caso que la solicitud no tenga ningun resultado, este metodo devolvera `null`.
 
 ```php
 $debitRequest = $sdk->debitRequests->get(185027);
@@ -195,9 +225,13 @@ echo sprintf(
 );
 ```
 
-# Adhesiones
+## Adhesion en CBU
 
-## Creación
+[Conceptos generales](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/conceptos-generales)
+
+### Creación
+
+[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/conceptos-generales)
 
 ```php
 $adhesion = new \Pagos360\Models\Adhesion();
@@ -205,9 +239,9 @@ $adhesion
     ->setAdhesionHolderName('Matias Pino')
     ->setExternalReference('8354')
     ->setCbuNumber('0070196530004025671477')
-    ->setCbuHolderIdNumber(33387275)
+    ->setCbuHolderIdNumber(11111111)
     ->setCbuHolderName('Matias Pino')
-    ->setEmail('mpino@pagos360.com')
+    ->setEmail('pagos360@example.com')
     ->setDescription('Creada por SDK')
     ->setShortDescription('P360')
 ;
@@ -215,15 +249,138 @@ $adhesion
 $adhesion = $sdk->adhesions->create($adhesion);
 ```
 
-## Buscar por id
+### Buscar por id
+
+[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/get-adhesion-id)
 
 ```php
 $adhesion = $sdk->adhesions->get(25);
 ```
 
-````
+### Cancelar
 
-# Logs
+[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/put-adhesion)
+
+```php
+$adhesion = $sdk->adhesions->get(25);
+$adhesion = $sdk->adhesions->cancel($adhesion);
+```
+
+## Solicitud de Débito en Tarjeta
+
+### Crear
+
+### Buscar por id
+
+#### Resultados
+
+## Adhesion en Tarjeta
+
+### Crear
+
+[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/post_card-adhesion)
+
+```php
+$cardAdhesion = new \Pagos360\Models\CardAdhesion();
+$cardAdhesion
+    ->setAdhesionHolderName('Matias Pino')
+    ->setEmail('pagos360@example.com')
+    ->setDescription('Creada por SDK')
+    ->setExternalReference('210000013847')
+    ->setCardNumber()
+    ->setCardHolderName('Matias Pino')
+;
+$cardAdhesion = $sdk->cardAdhesions->create($cardAdhesion);
+```
+
+### Buscar por id
+
+[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/get_card-adhesion)
+
+```php
+$cardAdhesion = $sdk->cardAdhesions->get(1467);
+```
+
+### Cancelar
+
+[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/put_adhesion)
+
+```php
+$cardAdhesion = $sdk->cardAdhesions->get(1467);
+$sdk->cardAdhesions->cancel($ad);
+```
+
+## Reporte de Cobranza
+
+### Buscar por fecha
+
+[Documentacion](https://developers.pagos360.com/endpoints/reports/get_collection-report)
+
+```php
+$collectionReport = $sdk->collectionReports->get(
+    new DateTimeImmutable('2018-11-29')
+);
+```
+
+#### Datos
+
+[Documentacion](https://developers.pagos360.com/endpoints/reports/get_collection-report#data)
+
+Los datos de un Reporte de Cobranza estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\CollectionData`.
+
+```php
+foreach ($collectionReport->getData() as $data) {
+    /** @var \Pagos360\Models\CollectionData $data */
+    $paymentDate = $data->getPaymentDate();
+}
+```
+
+## Reporte de Reversiones
+
+[Documentacion](https://developers.pagos360.com/endpoints/reports/get_chargeback-report)
+
+### Buscar por fecha
+
+```php
+
+```
+
+#### Datos
+
+Los datos de un Reporte de Cobranza estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\ChargebackData`.
+
+```php
+
+```
+
+## Reporte de Rendicion
+
+### Buscar por fecha
+
+```php
+$settlementReport = $sdk->settlementReports->get(
+    new DateTimeImmutable('2019-04-16')
+);
+```
+
+#### Datos
+
+Los datos de un Reporte de Cobranza estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\SettlementData`.
+
+```php
+foreach ($settlementReport->getData() as $data) {
+   /** @var \Pagos360\Models\SettlementData $data */
+       $requestId = $data->getRequestId(),
+   );
+}
+
+```
+
+## Cuenta
+
+# Otros
+
+## Logs
 
 La clase SDK, RestClient, y los repositorios implementan la interfaz `LoggerAwareInterface` del [PSR-3](https://www.php-fig.org/psr/psr-3/).
 
@@ -245,6 +402,7 @@ $sdk->paymentRequests->setLogger($paymentRequestLogger);
 ```
 
 Tambien existe el metodo `setLoggerAndPropagate` en el SDK que replica el logger al RestClient y todos los repositorios.
+
 ```php
 $logger = new \Monolog\Logger('Pagos360 SDK');
 $logger->pushHandler(new \Monolog\Handler\StreamHandler(STDOUT));
@@ -253,4 +411,3 @@ $sdk->setLoggerAndPropagate($logger);
 ```
 
 En estos ejemplos se usa la libreria `Monolog`, pero se puede usar cualquier libreria que implemente los metodos declarados en `LoggerInterface` de dicho PSR.
-````

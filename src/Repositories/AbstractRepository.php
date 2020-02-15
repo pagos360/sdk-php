@@ -19,6 +19,7 @@ abstract class AbstractRepository implements LoggerAwareInterface
 
     const TYPE = 'type';
     const FLAG_READONLY = 'readonly';
+    const FLAG_WRITEONLY = 'writeonly';
     const FLAG_REQUIRED = 'required';
     const FLAG_EDITABLE = 'editable';
     const PROPERTY_PATH = 'propertyPath';
@@ -115,6 +116,15 @@ abstract class AbstractRepository implements LoggerAwareInterface
      * @return bool
      */
     protected function isReadonly(array $fieldDefinition): bool
+    {
+        return $fieldDefinition[self::FLAG_READONLY] ?? false;
+    }
+
+    /**
+     * @param array $fieldDefinition
+     * @return bool
+     */
+    protected function isWriteonly(array $fieldDefinition): bool
     {
         return $fieldDefinition[self::FLAG_READONLY] ?? false;
     }

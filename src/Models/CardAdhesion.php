@@ -181,14 +181,6 @@ class CardAdhesion extends AbstractModel
     }
 
     /**
-     * @return string
-     */
-    public function getCardNumber(): string
-    {
-        return $this->cardNumber;
-    }
-
-    /**
      * @param string $cardNumber
      * @return CardAdhesion
      */

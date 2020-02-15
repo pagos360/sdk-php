@@ -35,9 +35,12 @@ abstract class Constants
     /**
      * Estados de una Adhesion.
      */
-    const ADHESION_STATE_PENDING_TO_SIGN = 'pending_to_sign';
-    const ADHESION_STATE_SIGNED = 'signed';
-    const ADHESION_STATE_CANCELED = 'canceled';
+    const ADHESION_PENDING_TO_SIGN_STATE = 'pending_to_sign';
+    const ADHESION_SIGNED_STATE = 'signed';
+    const ADHESION_CANCELED_STATE = 'canceled';
+    const CARD_ADHESION_PENDING_TO_SIGN_STATE = 'pending_to_sign';
+    const CARD_ADHESION_SIGNED_STATE = 'signed';
+    const CARD_ADHESION_CANCELED_STATE = 'canceled';
 
     /**
      * Estas constantes facilitan la exclusión de canales al momento de crear

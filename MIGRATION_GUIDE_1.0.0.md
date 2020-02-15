@@ -34,3 +34,6 @@
 ## Modificaciones:
 
 - El metodo `setLogger()` de la clase `\Pagos360\Sdk` solo configura el logger para dicha clase. En caso de querer configurar el mismo logger para todas las clases, se puede usar el nuevo metodo `setLoggerAndPropagate()`.
+- Se renombro la constante (en \Pagos360\Constants) ADHESION_STATE_PENDING_TO_SIGN a ADHESION_PENDING_TO_SIGN_STATE
+- Se renombro la constante (en \Pagos360\Constants) ADHESION_STATE_SIGNED a ADHESION_SIGNED_STATE
+- Se renombro la constante (en \Pagos360\Constants) ADHESION_STATE_CANCELED a ADHESION_CANCELED_STATE

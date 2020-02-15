@@ -3,6 +3,7 @@
 namespace Pagos360;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Pagos360\Models\AbstractModel;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
 use Pagos360\Models\CardAdhesion;
@@ -40,7 +41,7 @@ class ModelFactory
     /**
      * @param string $model
      * @param array  $input
-     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account|CollectionReport|SettlementReport|ChargebackReport
+     * @return AbstractModel|mixed
      * @throws \InvalidArgumentException
      */
     public static function build(string $model, array $input)
@@ -95,7 +96,7 @@ class ModelFactory
                 throw new \InvalidArgumentException("Can't build model $model");
         }
 
-        /** @var Adhesion|PaymentRequest|DebitRequest|HolderData|Account $instance */
+        /** @var AbstractModel $instance */
         $instance = new $model(self::normalizeInput($fields, $input));
         $instance->setRaw($input);
 
