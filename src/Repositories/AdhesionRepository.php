@@ -2,6 +2,8 @@
 
 namespace Pagos360\Repositories;
 
+use Pagos360\Constants;
+use Pagos360\Exceptions\Adhesions\AdhesionNotSignedException;
 use Pagos360\ModelFactory;
 use Pagos360\Models\Adhesion;
 use Pagos360\Types;
@@ -113,5 +115,44 @@ class AdhesionRepository extends AbstractRepository
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
         return ModelFactory::build(self::MODEL, $fromApi);
+    }
+
+    /**
+     * @param Adhesion $adhesion
+     * @return Adhesion
+     */
+    public function cancel(Adhesion $adhesion): Adhesion
+    {
+        $serialized = [];
+        $url = sprintf('%s/%s/cancel', self::API_URI, $adhesion->getId());
+        $fromApi = $this->restClient->put($url, $serialized);
+
+        /** @var Adhesion $instantiated */
+        $instantiated = ModelFactory::build(self::MODEL, $fromApi);
+        return $instantiated;
+    }
+
+    /**
+     * @param Adhesion $adhesion
+     * @return bool
+     */
+    public function isSigned(Adhesion $adhesion): bool
+    {
+        return $adhesion->getState() === Constants::ADHESION_SIGNED_STATE;
+    }
+
+    /**
+     * @param Adhesion $adhesion
+     * @return Adhesion
+     * @throws AdhesionNotSignedException
+     */
+    public function assertIsSigned(
+        Adhesion $adhesion
+    ): Adhesion {
+        if (!$this->isSigned($adhesion)) {
+            throw new AdhesionNotSignedException($adhesion);
+        }
+
+        return $adhesion;
     }
 }

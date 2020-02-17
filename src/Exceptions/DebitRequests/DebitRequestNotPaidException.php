@@ -23,7 +23,7 @@ class DebitRequestNotPaidException extends AbstractException
     ) {
         $this->debitRequest = $debitRequest;
         $data = [
-            'paymentRequest' => $debitRequest,
+            'debitRequest' => $debitRequest,
         ];
 
         parent::__construct($data, $previous);

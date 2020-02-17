@@ -23,7 +23,7 @@ class CardAdhesionNotSignedException extends AbstractException
     ) {
         $this->cardAdhesion = $cardAdhesion;
         $data = [
-            'paymentRequest' => $cardAdhesion,
+            'cardAdhesion' => $cardAdhesion,
         ];
 
         parent::__construct($data, $previous);
