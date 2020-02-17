@@ -2,12 +2,15 @@
 
 namespace Pagos360\Repositories;
 
+use Pagos360\ModelFactory;
 use Pagos360\Models\ChargebackData;
+use Pagos360\Models\ChargebackReport;
 use Pagos360\Types;
 
 class ChargebackDataRepository extends AbstractRepository
 {
     const MODEL = ChargebackData::class;
+    const API_URI = 'report/chargeback';
     const EDITABLE = false;
     const FIELDS = [
         "informedDate" => [
@@ -47,4 +50,16 @@ class ChargebackDataRepository extends AbstractRepository
             self::PROPERTY_PATH => "reverted_amount",
         ],
     ];
+
+    /**
+     * @param \DateTimeInterface $datetime
+     * @return ChargebackReport
+     */
+    public function get(\DateTimeInterface $datetime): ChargebackReport
+    {
+        $url = sprintf('%s/%s', self::API_URI, $datetime->format('d-m-Y'));
+        $fromApi = $this->restClient->get($url);
+
+        return ModelFactory::build(self::MODEL, $fromApi);
+    }
 }
