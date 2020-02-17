@@ -14,13 +14,6 @@ class CardDebitRequest extends AbstractModel
     protected $id;
 
     /**
-     * Tipo de Solicitud.
-     *
-     * @var string
-     */
-    protected $type;
-
-    /**
      * Estado de la Solicitud de Débito en Tarjeta.
      *
      * @var string
@@ -62,7 +55,7 @@ class CardDebitRequest extends AbstractModel
      *
      * @var array|null
      */
-    protected $metadata; // @todo review
+    protected $metadata;
 
     /**
      * Descripción o concepto de la Solicitud de Débito.
@@ -91,14 +84,6 @@ class CardDebitRequest extends AbstractModel
     public function getId(): int
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**

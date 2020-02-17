@@ -21,12 +21,13 @@ SDK para realizar transacciones por medio de Pagos360
     - [Crear](#crear-1)
     - [Buscar por id](#buscar-por-id-1)
     - [Resultados](#resultados-1)
+    - [Cancelar](#cancelar)
 
   - [Adhesion en CBU](#adhesion-en-cbu) (`Adhesion`)
 
     - [Crear](#crear-2)
     - [Buscar por id](#buscar-por-id-2)
-    - [Cancelar](#cancelar)
+    - [Cancelar](#cancelar-1)
 
   - [Solicitud de Débito en Tarjeta](#solicitud-de-débito-en-tarjeta) (`CardDebitRequest`)
 
@@ -38,7 +39,7 @@ SDK para realizar transacciones por medio de Pagos360
 
     - [Crear](#crear-4)
     - [Buscar por id](#buscar-por-id-4)
-    - [Cancelar](#cancelar-1)
+    - [Cancelar](#cancelar-2)
 
   - [Reporte de Cobranza](#reporte-de-cobranza) (`CollectionReport`)
     - [Buscar por fecha](#buscar-por-fecha)
@@ -66,7 +67,7 @@ composer require pagos360/sdk
 
 # Introducción
 
-Este SDK actua de forma similar a un ORM, usando un diseño similar a los repositorios para generar objetos nativos en base de las respuestas JSON de la API.
+Este SDK actúa de forma similar a un ORM, usando un diseño similar a los repositorios para generar objetos nativos en base de las respuestas JSON de la API.
 
 Si bien el objetivo del SDK es simplificar el proceso de integración, no es un reemplazo de la [Documentación para Desarrolladores](https://developers.pagos360.com/).
 
@@ -225,20 +226,29 @@ echo sprintf(
 );
 ```
 
+### Cancelar
+
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/put-debit-request)
+
+```php
+$originalDebitRequest = $sdk->debitRequests->get($debitRequestId);
+$debitRequest = $sdk->debitRequests->cancel($originalDebitRequest);
+```
+
 ## Adhesion en CBU
 
 [Conceptos generales](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/conceptos-generales)
 
-### Creación
+### Crear
 
-[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/conceptos-generales)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/conceptos-generales)
 
 ```php
 $adhesion = new \Pagos360\Models\Adhesion();
 $adhesion
     ->setAdhesionHolderName('Matias Pino')
     ->setExternalReference('8354')
-    ->setCbuNumber('0070196530004025671477')
+    ->setCbuNumber('0000000000000000000000')
     ->setCbuHolderIdNumber(11111111)
     ->setCbuHolderName('Matias Pino')
     ->setEmail('pagos360@example.com')
@@ -251,7 +261,7 @@ $adhesion = $sdk->adhesions->create($adhesion);
 
 ### Buscar por id
 
-[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/get-adhesion-id)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/get-adhesion-id)
 
 ```php
 $adhesion = $sdk->adhesions->get(25);
@@ -259,7 +269,7 @@ $adhesion = $sdk->adhesions->get(25);
 
 ### Cancelar
 
-[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/put-adhesion)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/adhesions/put-adhesion)
 
 ```php
 $adhesion = $sdk->adhesions->get(25);
@@ -270,15 +280,45 @@ $adhesion = $sdk->adhesions->cancel($adhesion);
 
 ### Crear
 
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/put-debit-request)
+
+```php
+$cardAdhesion = $sdk->cardAdhesions->get(1488);
+
+$cardDebitRequest = new \Pagos360\Models\CardDebitRequest();
+$cardDebitRequest
+    ->setCardAdhesion($cardAdhesion)
+    ->setMonth(4)
+    ->setYear(2021)
+    ->setAmount(13.53)
+;
+$cardDebitRequest = $sdk->cardDebitRequests->create($cardDebitRequest);
+```
+
 ### Buscar por id
 
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-debit-request/get_card-debit-request-id)
+
+```php
+$cardDebitRequest = $sdk->cardDebitRequests->get(652641);
+```
+
 #### Resultados
+
+### Cancelar
+
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico/debit-request/put-debit-request)
+
+```php
+$cardDebitRequest = $sdk->cardDebitRequests->get(652641);
+$cardDebitRequest = $sdk->cardDebitRequests->cancel($cardDebitRequest);
+```
 
 ## Adhesion en Tarjeta
 
 ### Crear
 
-[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/post_card-adhesion)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/post_card-adhesion)
 
 ```php
 $cardAdhesion = new \Pagos360\Models\CardAdhesion();
@@ -295,7 +335,7 @@ $cardAdhesion = $sdk->cardAdhesions->create($cardAdhesion);
 
 ### Buscar por id
 
-[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/get_card-adhesion)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/get_card-adhesion)
 
 ```php
 $cardAdhesion = $sdk->cardAdhesions->get(1467);
@@ -303,7 +343,7 @@ $cardAdhesion = $sdk->cardAdhesions->get(1467);
 
 ### Cancelar
 
-[Documentacion](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/put_adhesion)
+[Documentación](https://developers.pagos360.com/endpoints/debito-automatico-tarjeta/card-adhesions/put_adhesion)
 
 ```php
 $cardAdhesion = $sdk->cardAdhesions->get(1467);
@@ -314,7 +354,7 @@ $sdk->cardAdhesions->cancel($ad);
 
 ### Buscar por fecha
 
-[Documentacion](https://developers.pagos360.com/endpoints/reports/get_collection-report)
+[Documentación](https://developers.pagos360.com/endpoints/reports/get_collection-report)
 
 ```php
 $collectionReport = $sdk->collectionReports->get(
@@ -324,7 +364,7 @@ $collectionReport = $sdk->collectionReports->get(
 
 #### Datos
 
-[Documentacion](https://developers.pagos360.com/endpoints/reports/get_collection-report#data)
+[Documentación](https://developers.pagos360.com/endpoints/reports/get_collection-report#data)
 
 Los datos de un Reporte de Cobranza estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\CollectionData`.
 
@@ -337,12 +377,14 @@ foreach ($collectionReport->getData() as $data) {
 
 ## Reporte de Reversiones
 
-[Documentacion](https://developers.pagos360.com/endpoints/reports/get_chargeback-report)
-
 ### Buscar por fecha
 
-```php
+[Documentación](https://developers.pagos360.com/endpoints/reports/get_chargeback-report)
 
+```php
+$chargebackReport = $sdk->chargebackReports->get(
+    new DateTimeImmutable('2018-11-29')
+);
 ```
 
 #### Datos
@@ -350,12 +392,18 @@ foreach ($collectionReport->getData() as $data) {
 Los datos de un Reporte de Cobranza estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\ChargebackData`.
 
 ```php
-
+foreach ($chargebackReport->getData() as $data) {
+   /** @var \Pagos360\Models\ChargebackData $data */
+       $requestId = $data->getRequestId(),
+   );
+}
 ```
 
 ## Reporte de Rendicion
 
 ### Buscar por fecha
+
+[Documentación](https://developers.pagos360.com/endpoints/reports/get_settlement-report)
 
 ```php
 $settlementReport = $sdk->settlementReports->get(
@@ -365,6 +413,8 @@ $settlementReport = $sdk->settlementReports->get(
 
 #### Datos
 
+[Documentación](https://developers.pagos360.com/endpoints/reports/get_settlement-report#data)
+
 Los datos de un Reporte de Cobranza estan encapsulados en un objeto de tipo `\Doctrine\Common\Collections\ArrayCollection`, el cual contiene una colección de instancias del modelo `\Pagos360\Models\SettlementData`.
 
 ```php
@@ -373,10 +423,19 @@ foreach ($settlementReport->getData() as $data) {
        $requestId = $data->getRequestId(),
    );
 }
-
 ```
 
 ## Cuenta
+
+[Conceptos generales](https://developers.pagos360.com/endpoints/account/conceptos-generales)
+
+### Obtener
+
+[Documentación](https://developers.pagos360.com/endpoints/account/cuenta)
+
+```php
+$account = $sdk->account->get();
+```
 
 # Otros
 

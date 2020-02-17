@@ -55,7 +55,7 @@ class DebitRequestRepository extends AbstractRepository
             self::PROPERTY_PATH => 'second_total',
         ],
         'metadata' => [
-            self::TYPE => Types::ARRAY, // @todo review
+            self::TYPE => Types::ARRAY,
             self::FLAG_MAYBE => true,
         ],
         'results' => [

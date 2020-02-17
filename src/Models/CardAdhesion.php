@@ -53,7 +53,7 @@ class CardAdhesion extends AbstractModel
     /**
      * Objeto JSON que se puede utilizar para guardar atributos adicionales en
      * la adhesión y poder sincronizar con tus sistemas de backend.
-     * Pagos360.com no utiliza este objeto. // @todo review el type
+     * Pagos360.com no utiliza este objeto.
      *
      * @var array|null
      */

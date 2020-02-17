@@ -50,7 +50,7 @@ class CardAdhesionRepository extends AbstractRepository
             self::FLAG_READONLY => false,
         ],
         "metadata" => [
-            self::TYPE => Types::ARRAY, // @todo review
+            self::TYPE => Types::ARRAY,
             self::FLAG_REQUIRED => false,
             self::FLAG_READONLY => false,
         ],

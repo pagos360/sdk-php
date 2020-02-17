@@ -92,8 +92,6 @@ abstract class AbstractRepository implements LoggerAwareInterface
      * @param string $type
      * @param mixed  $value
      * @return \DateTimeImmutable|string
-     * @todo review if this should be moved to ModelFactory. Seeing I had to
-     *       import Types, the answer is most likely yes.
      */
     protected function transformField(string $type, $value)
     {

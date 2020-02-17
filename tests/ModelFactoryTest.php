@@ -39,7 +39,6 @@ JSON;
     }
 
     /**
-     * @todo remove
      * @test
      */
     public function basic()

@@ -83,7 +83,7 @@ class AdhesionRepository extends AbstractRepository
             self::FLAG_MAYBE => true,
         ],
         'metadata' => [
-            self::TYPE => Types::ARRAY, // @todo review
+            self::TYPE => Types::ARRAY,
             self::FLAG_MAYBE => true,
         ],
     ];

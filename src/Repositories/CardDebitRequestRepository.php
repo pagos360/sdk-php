@@ -22,13 +22,7 @@ class CardDebitRequestRepository extends AbstractRepository
             self::TYPE => Types::INT,
             self::FLAG_READONLY => true,
         ],
-        "type" => [
-            self::PROPERTY_PATH => "type",
-            self::TYPE => Types::STRING,
-            self::FLAG_READONLY => true,
-        ],
         "state" => [
-            self::PROPERTY_PATH => "state",
             self::TYPE => Types::STRING,
             self::FLAG_READONLY => true,
         ],
@@ -38,27 +32,22 @@ class CardDebitRequestRepository extends AbstractRepository
             self::FLAG_READONLY => true,
         ],
         "amount" => [
-            self::PROPERTY_PATH => "amount",
             self::TYPE => Types::FLOAT,
             self::FLAG_REQUIRED => true,
         ],
         "month" => [
-            self::PROPERTY_PATH => "month",
-            self::TYPE => Types::INT, // @todo Add MONTH type?
+            self::TYPE => Types::INT,
             self::FLAG_REQUIRED => true,
         ],
         "year" => [
-            self::PROPERTY_PATH => "year",
-            self::TYPE => Types::INT, // @todo Add YEAR type?
+            self::TYPE => Types::INT,
             self::FLAG_REQUIRED => true,
         ],
         "metadata" => [
-            self::PROPERTY_PATH => "metadata",
-            self::TYPE => Types::ARRAY, // @todo review
+            self::TYPE => Types::ARRAY,
             self::FLAG_MAYBE => true,
         ],
         "description" => [
-            self::PROPERTY_PATH => "description",
             self::TYPE => Types::STRING,
             self::FLAG_MAYBE => true,
         ],

@@ -68,7 +68,7 @@ class PaymentRequestRepository extends AbstractRepository
             self::PROPERTY_PATH => 'payer_email',
         ],
         'metadata' => [
-            self::TYPE => Types::ARRAY, // @todo review
+            self::TYPE => Types::ARRAY,
             self::FLAG_MAYBE => true,
         ],
         'barcode' => [
