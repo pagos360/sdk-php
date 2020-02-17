@@ -5,6 +5,7 @@ namespace Pagos360\Repositories;
 use Pagos360\Constants;
 use Pagos360\Exceptions\DebitRequests\DebitRequestNotPaidException;
 use Pagos360\ModelFactory;
+use Pagos360\Models\Adhesion;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\Result;
 use Pagos360\Types;
@@ -115,6 +116,21 @@ class DebitRequestRepository extends AbstractRepository
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
         return ModelFactory::build(self::MODEL, $fromApi);
+    }
+
+    /**
+     * @param DebitRequest $debitRequest
+     * @return DebitRequest
+     */
+    public function cancel(DebitRequest $debitRequest): DebitRequest
+    {
+        $serialized = [];
+        $url = sprintf('%s/%s/cancel', self::API_URI, $debitRequest->getId());
+        $fromApi = $this->restClient->put($url, $serialized);
+
+        /** @var DebitRequest $instantiated */
+        $instantiated = ModelFactory::build(self::MODEL, $fromApi);
+        return $instantiated;
     }
 
     /**
