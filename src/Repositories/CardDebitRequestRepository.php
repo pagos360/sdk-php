@@ -2,13 +2,17 @@
 
 namespace Pagos360\Repositories;
 
+use Pagos360\Constants;
+use Pagos360\Exceptions\CardDebitRequests\CardDebitRequestNotPaidException;
+use Pagos360\ModelFactory;
 use Pagos360\Models\CardDebitRequest;
+use Pagos360\Models\Result;
 use Pagos360\Types;
 
 class CardDebitRequestRepository extends AbstractRepository
 {
     const MODEL = CardDebitRequest::class;
-    const BLOCK_PREFIX = 'payment_request';
+    const BLOCK_PREFIX = 'card_debit_request';
     const API_URI = 'card-debit-request';
 
     const EDITABLE = false;
@@ -70,4 +74,89 @@ class CardDebitRequestRepository extends AbstractRepository
             self::FLAG_READONLY => true,
         ],
     ];
+
+    /**
+     * @param int $id
+     * @return CardDebitRequest
+     */
+    public function get(int $id): CardDebitRequest
+    {
+        $url = sprintf('%s/%s', self::API_URI, $id);
+        $fromApi = $this->restClient->get($url);
+
+        return ModelFactory::build(self::MODEL, $fromApi);
+    }
+
+    /**
+     * @param CardDebitRequest $cardDebitRequest
+     * @return bool
+     */
+    public function isPaid(CardDebitRequest $cardDebitRequest): bool
+    {
+        return $cardDebitRequest->getState() === Constants::CARD_DEBIT_REQUEST_PAID_STATE;
+    }
+
+    /**
+     * @param CardDebitRequest $cardDebitRequest
+     * @return CardDebitRequest
+     * @throws CardDebitRequestNotPaidException
+     */
+    public function assertIsPaid(
+        CardDebitRequest $cardDebitRequest
+    ): CardDebitRequest {
+        if (!$this->isPaid($cardDebitRequest)) {
+            throw new CardDebitRequestNotPaidException($cardDebitRequest);
+        }
+
+        return $cardDebitRequest;
+    }
+
+    /**
+     * @param CardDebitRequest $cardDebitRequest
+     * @return CardDebitRequest
+     */
+    public function create(CardDebitRequest $cardDebitRequest)
+    {
+        $serialized = $this->buildBodyToSave(
+            $cardDebitRequest,
+            self::BLOCK_PREFIX,
+            self::FIELDS
+        );
+
+        $fromApi = $this->restClient->post(self::API_URI, $serialized);
+
+        return ModelFactory::build(self::MODEL, $fromApi);
+    }
+
+    /**
+     * @param CardDebitRequest $cardDebitRequest
+     * @return CardDebitRequest
+     */
+    public function cancel(CardDebitRequest $cardDebitRequest): CardDebitRequest
+    {
+        $serialized = [];
+        $url = sprintf('%s/%s/cancel', self::API_URI, $cardDebitRequest->getId());
+        $fromApi = $this->restClient->put($url, $serialized);
+
+        /** @var CardDebitRequest $instantiated */
+        $instantiated = ModelFactory::build(self::MODEL, $fromApi);
+        return $instantiated;
+    }
+
+    /**
+     * @param CardDebitRequest $debitRequest
+     * @return Result|null
+     */
+    public function findCollectedResult(
+        CardDebitRequest $debitRequest
+    ): ?Result {
+        foreach ($debitRequest->getResults() as $result) {
+            /** @var Result $result */
+            if ($result->getType() === 'collected_card_debit_request_result') {
+                return $result;
+            }
+        }
+
+        return null;
+    }
 }

@@ -6,6 +6,7 @@ use Pagos360\Exceptions\MissingRequiredInputException;
 use Pagos360\ModelFactory;
 use Pagos360\Models\AbstractModel;
 use Pagos360\Models\Adhesion;
+use Pagos360\Models\CardAdhesion;
 use Pagos360\RestClient;
 use Pagos360\Types;
 use Psr\Log\LoggerAwareInterface;
@@ -99,6 +100,9 @@ abstract class AbstractRepository implements LoggerAwareInterface
         switch ($type) {
             case Types::ADHESION:
                 /** @var Adhesion $value */
+                return $value->getId();
+            case Types::CARD_ADHESION:
+                /** @var CardAdhesion $value */
                 return $value->getId();
             case Types::DATETIME:
                 /** @var \DateTimeImmutable $value */
