@@ -3,6 +3,9 @@
 vendor/bin/phpstan analyze --level 5 src
 STAN_EC=$?
 
+vendor/bin/psalm
+PSALM_EC=$?
+
 vendor/bin/phpcs
 CS_EC=$?
 
@@ -23,7 +26,7 @@ echo "$(grep -rni '@deprecated' src | wc -l) @deprecated found in src"
 
 
 # Exit if any error codes
-ERROR=$(($STAN_EC + $CS_EC + $UNIT_EC + $COMPOSER_VALIDATE_EC + $EXIT_COUNT + $VARDUMP_COUNT))
+ERROR=$(($STAN_EC + $PSALM_EC + $CS_EC + $UNIT_EC + $COMPOSER_VALIDATE_EC + $EXIT_COUNT + $VARDUMP_COUNT))
 if [ "${ERROR}" -ne "0" ]
 then
   echo -e "\n\n*** Commit aborted. ***"

@@ -91,7 +91,7 @@ abstract class AbstractRepository implements LoggerAwareInterface
      *
      * @param string $type
      * @param mixed  $value
-     * @return \DateTimeImmutable|string
+     * @return int|string
      */
     protected function transformField(string $type, $value)
     {

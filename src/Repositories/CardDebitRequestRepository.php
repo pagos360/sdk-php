@@ -139,7 +139,12 @@ class CardDebitRequestRepository extends AbstractRepository
     public function findCollectedResult(
         CardDebitRequest $debitRequest
     ): ?Result {
-        foreach ($debitRequest->getResults() as $result) {
+        $results = $debitRequest->getResults();
+        if (empty($results)) {
+            return null;
+        }
+
+        foreach ($results as $result) {
             /** @var Result $result */
             if ($result->getType() === 'collected_card_debit_request_result') {
                 return $result;

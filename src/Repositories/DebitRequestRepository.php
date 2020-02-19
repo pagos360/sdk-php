@@ -5,7 +5,6 @@ namespace Pagos360\Repositories;
 use Pagos360\Constants;
 use Pagos360\Exceptions\DebitRequests\DebitRequestNotPaidException;
 use Pagos360\ModelFactory;
-use Pagos360\Models\Adhesion;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\Result;
 use Pagos360\Types;
@@ -140,7 +139,12 @@ class DebitRequestRepository extends AbstractRepository
     public function findCollectedResult(
         DebitRequest $debitRequest
     ): ?Result {
-        foreach ($debitRequest->getResults() as $result) {
+        $results = $debitRequest->getResults();
+        if (empty($results)) {
+            return null;
+        }
+
+        foreach ($results as $result) {
             /** @var Result $result */
             if ($result->getType() === 'collected_debit_request_result') {
                 return $result;

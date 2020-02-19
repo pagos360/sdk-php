@@ -181,7 +181,12 @@ class PaymentRequestRepository extends AbstractRepository
     public function findCollectedResult(
         PaymentRequest $paymentRequest
     ): ?Result {
-        foreach ($paymentRequest->getResults() as $result) {
+        $results = $paymentRequest->getResults();
+        if (empty($results)) {
+            return null;
+        }
+
+        foreach ($results as $result) {
             /** @var Result $result */
             if ($result->getType() === 'collected_payment_request_result') {
                 return $result;

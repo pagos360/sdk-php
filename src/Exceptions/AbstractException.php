@@ -7,16 +7,16 @@ use Throwable;
 abstract class AbstractException extends \Exception
 {
     /**
-     * @var array|null
+     * @var array
      */
-    private $data;
+    private $data = [];
 
     /**
-     * @param array|null     $data
+     * @param array          $data
      * @param Throwable|null $previous
      */
     public function __construct(
-        array $data = null,
+        array $data = [],
         Throwable $previous = null
     ) {
         $this->data = $data;
