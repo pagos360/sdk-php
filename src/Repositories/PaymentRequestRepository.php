@@ -102,9 +102,9 @@ class PaymentRequestRepository extends AbstractRepository
             self::TYPE => Types::URL,
             self::PROPERTY_PATH => 'back_url_rejected',
         ],
-        'excludedChannelTypes' => [
+        'excludedChannels' => [
             self::TYPE => Types::ARRAY_OF_STRINGS,
-            self::PROPERTY_PATH => 'excluded_channel_types',
+            self::PROPERTY_PATH => 'excluded_channels',
         ],
         'holderData' => [
             self::FLAG_READONLY => true,
