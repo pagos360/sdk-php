@@ -84,6 +84,16 @@ class Result extends AbstractModel
     protected $paymentMetadata;
 
     /**
+     * @var \DateTimeImmutable|null
+     */
+    protected $createdAt;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    protected $paidAt;
+
+    /**
      * En caso que sea una Solicitud de Debito, este campo indica la fecha y
      * hora en la que fue rechazada.
      *
@@ -98,6 +108,11 @@ class Result extends AbstractModel
      * @var string|null
      */
     protected $stateComment;
+
+    /**
+     * @var \DateTimeImmutable|null
+     */
+    protected $revertedAt;
 
     /**
      * @return int
@@ -190,6 +205,22 @@ class Result extends AbstractModel
     /**
      * @return \DateTimeImmutable|null
      */
+    public function getCreatedAt(): ?\DateTimeImmutable
+    {
+        return $this->createdAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getPaidAt(): ?\DateTimeImmutable
+    {
+        return $this->paidAt;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
     public function getRejectedAt(): ?\DateTimeImmutable
     {
         return $this->rejectedAt;
@@ -201,5 +232,13 @@ class Result extends AbstractModel
     public function getStateComment(): ?string
     {
         return $this->stateComment;
+    }
+
+    /**
+     * @return \DateTimeImmutable|null
+     */
+    public function getRevertedAt(): ?\DateTimeImmutable
+    {
+        return $this->revertedAt;
     }
 }

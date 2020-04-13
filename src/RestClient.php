@@ -10,10 +10,11 @@ use Pagos360\Exceptions\RestClient\ForbiddenException;
 use Pagos360\Exceptions\RestClient\UnauthorizedException;
 use Pagos360\Exceptions\RestClient\UnexpectedStatusCode;
 use Psr\Http\Message\ResponseInterface;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 use Psr\Log\LoggerInterface;
 
-class RestClient
+class RestClient implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -83,6 +84,36 @@ class RestClient
         );
         try {
             $this->assertStatusCode($response, 201);
+        } catch (ClientError $exception) {
+            $exception->appendData([
+                'requestBody' => $requestBody,
+            ]);
+
+            throw $exception;
+        }
+        return $this->parseBody($response);
+    }
+
+    /**
+     * @param string $url
+     * @param array  $body
+     * @return array
+     * @throws ClientError
+     */
+    public function put(string $url, array $body): array
+    {
+        $requestBody = json_encode($body);
+        $response = $this->guzzleClient->put(
+            $url,
+            [
+                RequestOptions::HEADERS => [
+                    'Authorization' => 'Bearer ' . $this->apiKey,
+                ],
+                RequestOptions::BODY => $requestBody,
+            ]
+        );
+        try {
+            $this->assertStatusCode($response, 200);
         } catch (ClientError $exception) {
             $exception->appendData([
                 'requestBody' => $requestBody,

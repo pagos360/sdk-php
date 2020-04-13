@@ -10,6 +10,9 @@ class CancelledTest extends AbstractTestCase
 {
     const STATE_COMMENT = "Cancelado por el usuario";
 
+    /**
+     * @var array
+     */
     private $mockedResponse = [
         'id' => 1,
         'external_reference' => "098091",

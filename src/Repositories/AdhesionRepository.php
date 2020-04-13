@@ -2,10 +2,10 @@
 
 namespace Pagos360\Repositories;
 
-use Pagos360\Filters\AdhesionFilters;
+use Pagos360\Constants;
+use Pagos360\Exceptions\Adhesions\AdhesionNotSignedException;
 use Pagos360\ModelFactory;
 use Pagos360\Models\Adhesion;
-use Pagos360\PaginatedResponse;
 use Pagos360\Types;
 
 class AdhesionRepository extends AbstractRepository
@@ -13,7 +13,6 @@ class AdhesionRepository extends AbstractRepository
     const MODEL = Adhesion::class;
     const BLOCK_PREFIX = 'adhesion';
     const API_URI = 'adhesion';
-    const DEFAULT_ITEMS_PER_PAGE = 25;
 
     const EDITABLE = false;
     const FIELDS = [
@@ -83,6 +82,10 @@ class AdhesionRepository extends AbstractRepository
             self::PROPERTY_PATH => 'state_comment',
             self::FLAG_MAYBE => true,
         ],
+        'metadata' => [
+            self::TYPE => Types::ARRAY,
+            self::FLAG_MAYBE => true,
+        ],
     ];
 
     /**
@@ -94,67 +97,7 @@ class AdhesionRepository extends AbstractRepository
         $url = sprintf('%s/%s', self::API_URI, $id);
         $fromApi = $this->restClient->get($url);
 
-        return ModelFactory::build(Adhesion::class, $fromApi);
-    }
-
-    /**
-     * @param int $page
-     * @param int $itemsPerPage
-     * @return PaginatedResponse
-     */
-    public function getPage(
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $url = sprintf('%s', self::API_URI);
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            null
-        );
-        $paginatedResponse = $this->restClient->get($url, $queryString);
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
-    }
-
-    /**
-     * @param AdhesionFilters|null $filters
-     * @param int                  $page
-     * @param int                  $itemsPerPage
-     * @return PaginatedResponse
-     */
-    public function getFilteredPage(
-        ?AdhesionFilters $filters,
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            $filters
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**
@@ -171,6 +114,45 @@ class AdhesionRepository extends AbstractRepository
 
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
-        return ModelFactory::build(Adhesion::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
+    }
+
+    /**
+     * @param Adhesion $adhesion
+     * @return Adhesion
+     */
+    public function cancel(Adhesion $adhesion): Adhesion
+    {
+        $serialized = [];
+        $url = sprintf('%s/%s/cancel', self::API_URI, $adhesion->getId());
+        $fromApi = $this->restClient->put($url, $serialized);
+
+        /** @var Adhesion $instantiated */
+        $instantiated = ModelFactory::build(self::MODEL, $fromApi);
+        return $instantiated;
+    }
+
+    /**
+     * @param Adhesion $adhesion
+     * @return bool
+     */
+    public function isSigned(Adhesion $adhesion): bool
+    {
+        return $adhesion->getState() === Constants::ADHESION_SIGNED_STATE;
+    }
+
+    /**
+     * @param Adhesion $adhesion
+     * @return Adhesion
+     * @throws AdhesionNotSignedException
+     */
+    public function assertIsSigned(
+        Adhesion $adhesion
+    ): Adhesion {
+        if (!$this->isSigned($adhesion)) {
+            throw new AdhesionNotSignedException($adhesion);
+        }
+
+        return $adhesion;
     }
 }

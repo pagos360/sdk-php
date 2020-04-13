@@ -23,11 +23,24 @@ abstract class Constants
     const DEBIT_REQUEST_REVERTED_STATE = 'reverted';
 
     /**
+     * Estados de una Solicitud de Débito en Tarjeta.
+     */
+    const CARD_DEBIT_REQUEST_PAID_STATE = 'paid';
+    const CARD_DEBIT_REQUEST_PENDING_STATE = 'pending';
+    const CARD_DEBIT_REQUEST_EXPIRED_STATE = 'expired';
+    const CARD_DEBIT_REQUEST_CANCELED_STATE = 'canceled';
+    const CARD_DEBIT_REQUEST_REJECTED_STATE = 'rejected';
+    const CARD_DEBIT_REQUEST_REVERTED_STATE = 'reverted';
+
+    /**
      * Estados de una Adhesion.
      */
-    const ADHESION_STATE_PENDING_TO_SIGN = 'pending_to_sign';
-    const ADHESION_STATE_SIGNED = 'signed';
-    const ADHESION_STATE_CANCELED = 'canceled';
+    const ADHESION_PENDING_TO_SIGN_STATE = 'pending_to_sign';
+    const ADHESION_SIGNED_STATE = 'signed';
+    const ADHESION_CANCELED_STATE = 'canceled';
+    const CARD_ADHESION_PENDING_TO_SIGN_STATE = 'pending_to_sign';
+    const CARD_ADHESION_SIGNED_STATE = 'signed';
+    const CARD_ADHESION_CANCELED_STATE = 'canceled';
 
     /**
      * Estas constantes facilitan la exclusión de canales al momento de crear
@@ -37,10 +50,4 @@ abstract class Constants
     const CHANNEL_DEBIT_CARD = 'debit_card';
     const CHANNEL_NON_BANKING = 'non_banking';
     const CHANNEL_BANKING = 'banking';
-
-    /**
-     * Tipos de Cuenta en Pagos360
-     */
-    const ACCOUNT_CURRENT = 'current_account';
-    const ACCOUNT_CONSOLIDATED = 'consolidated_account';
 }

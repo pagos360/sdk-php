@@ -12,14 +12,6 @@ class Account extends AbstractModel
     protected $id;
 
     /**
-     * Modalidad de la Cuenta. Valores posibles current_account (Cuenta
-     * Corriente) y consolidated_account (Cuenta Consolidada).
-     *
-     * @var string
-     */
-    protected $type;
-
-    /**
      * Saldo disponible.
      *
      * @var float
@@ -34,28 +26,11 @@ class Account extends AbstractModel
     protected $unavailableBalance;
 
     /**
-     * Tipos de Medios de Pago habilitados para la cuenta. Valores posibles:
-     * banking, credit_card, debit_card y non_banking.
-     *
-     * @var string[]
-     */
-    protected $availableChannelTypes;
-
-
-    /**
      * @return string
      */
     public function getId(): string
     {
         return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getType(): string
-    {
-        return $this->type;
     }
 
     /**
@@ -72,13 +47,5 @@ class Account extends AbstractModel
     public function getUnavailableBalance(): float
     {
         return $this->unavailableBalance;
-    }
-
-    /**
-     * @return string[]
-     */
-    public function getAvailableChannelTypes(): array
-    {
-        return $this->availableChannelTypes;
     }
 }

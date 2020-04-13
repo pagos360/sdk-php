@@ -6,8 +6,9 @@ use Pagos360\Models\AbstractModel;
 use Pagos360\Repositories\AbstractRepository;
 use Pagos360\RestClient;
 use Pagos360\Types;
+use PHPUnit\Framework\TestCase;
 
-class AbstractRepositoryTest extends \PHPUnit\Framework\TestCase
+class AbstractRepositoryTest extends TestCase
 {
     /**
      * @return ConcreteRepository
@@ -74,7 +75,7 @@ class AbstractRepositoryTest extends \PHPUnit\Framework\TestCase
             'id' => [
                 AbstractRepository::FLAG_REQUIRED => true,
                 AbstractRepository::TYPE => Types::INT,
-            ]
+            ],
         ];
         $model = $this->createMock(AbstractModel::class);
         $model->method('has')->willReturn(false);

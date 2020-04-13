@@ -3,28 +3,45 @@
 namespace Pagos360;
 
 use Doctrine\Common\Collections\ArrayCollection;
+use Pagos360\Models\AbstractModel;
 use Pagos360\Models\Account;
 use Pagos360\Models\Adhesion;
+use Pagos360\Models\CardAdhesion;
+use Pagos360\Models\CardDebitRequest;
+use Pagos360\Models\ChargebackData;
+use Pagos360\Models\ChargebackReport;
+use Pagos360\Models\CollectionData;
+use Pagos360\Models\CollectionReport;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\HolderData;
 use Pagos360\Models\PaymentMetadata;
 use Pagos360\Models\PaymentRequest;
 use Pagos360\Models\Result;
+use Pagos360\Models\SettlementData;
+use Pagos360\Models\SettlementReport;
 use Pagos360\Repositories\AbstractRepository;
 use Pagos360\Repositories\AccountRepository;
 use Pagos360\Repositories\AdhesionRepository;
+use Pagos360\Repositories\CardAdhesionRepository;
+use Pagos360\Repositories\CardDebitRequestRepository;
+use Pagos360\Repositories\ChargebackDataRepository;
+use Pagos360\Repositories\ChargebackReportRepository;
+use Pagos360\Repositories\CollectionDataRepository;
+use Pagos360\Repositories\CollectionReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\HolderDataRepository;
 use Pagos360\Repositories\PaymentMetadataRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
 use Pagos360\Repositories\ResultRepository;
+use Pagos360\Repositories\SettlementDataRepository;
+use Pagos360\Repositories\SettlementReportRepository;
 
 class ModelFactory
 {
     /**
      * @param string $model
      * @param array  $input
-     * @return Adhesion|PaymentRequest|DebitRequest|HolderData|Account
+     * @return AbstractModel|mixed
      * @throws \InvalidArgumentException
      */
     public static function build(string $model, array $input)
@@ -51,11 +68,35 @@ class ModelFactory
             case PaymentMetadata::class:
                 $fields = PaymentMetadataRepository::FIELDS;
                 break;
+            case CollectionReport::class:
+                $fields = CollectionReportRepository::FIELDS;
+                break;
+            case CollectionData::class:
+                $fields = CollectionDataRepository::FIELDS;
+                break;
+            case SettlementReport::class:
+                $fields = SettlementReportRepository::FIELDS;
+                break;
+            case SettlementData::class:
+                $fields = SettlementDataRepository::FIELDS;
+                break;
+            case ChargebackReport::class:
+                $fields = ChargebackReportRepository::FIELDS;
+                break;
+            case ChargebackData::class:
+                $fields = ChargebackDataRepository::FIELDS;
+                break;
+            case CardAdhesion::class:
+                $fields = CardAdhesionRepository::FIELDS;
+                break;
+            case CardDebitRequest::class:
+                $fields = CardDebitRequestRepository::FIELDS;
+                break;
             default:
-                throw new \InvalidArgumentException('Cant build model');
+                throw new \InvalidArgumentException("Can't build model $model");
         }
 
-        /** @var Adhesion|PaymentRequest|DebitRequest|HolderData|Account $instance */
+        /** @var AbstractModel $instance */
         $instance = new $model(self::normalizeInput($fields, $input));
         $instance->setRaw($input);
 
@@ -76,6 +117,15 @@ class ModelFactory
         switch ($collectionOf) {
             case Types::RESULTS:
                 $model = Result::class;
+                break;
+            case Types::COLLECTION_DATA:
+                $model = CollectionData::class;
+                break;
+            case Types::SETTLEMENT_DATA:
+                $model = SettlementData::class;
+                break;
+            case Types::CHARGEBACK_DATA:
+                $model = ChargebackData::class;
                 break;
             default:
                 throw new \InvalidArgumentException('Cant build collection');
@@ -123,8 +173,12 @@ class ModelFactory
         array $fieldDefinition,
         string $key
     ): string {
-        if ($fieldDefinition[AbstractRepository::TYPE] === Types::ADHESION) {
-            return 'adhesion_id';
+        $definedType = $fieldDefinition[AbstractRepository::TYPE];
+        switch ($definedType) {
+            case Types::ADHESION:
+                return 'adhesion_id';
+            case Types::CARD_ADHESION:
+                return 'card_adhesion_id';
         }
 
         return self::getLookupAttribute($fieldDefinition, $key);
@@ -185,6 +239,14 @@ class ModelFactory
                 return self::build(PaymentMetadata::class, $value);
             case Types::RESULTS:
                 return self::buildCollection(Types::RESULTS, $value);
+            case Types::COLLECTION_DATA:
+                return self::buildCollection(Types::COLLECTION_DATA, $value);
+            case Types::SETTLEMENT_DATA:
+                return self::buildCollection(Types::SETTLEMENT_DATA, $value);
+            case Types::CHARGEBACK_DATA:
+                return self::buildCollection(Types::CHARGEBACK_DATA, $value);
+            case Types::CARD_ADHESION:
+                return self::build(CardAdhesion::class, $value);
             case Types::INT:
                 return (int) $value;
             case Types::STRING:

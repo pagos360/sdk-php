@@ -16,7 +16,6 @@ class PaymentRequest extends AbstractModel
     /**
      * Estado de la Solicitud de Pago.
      * Los posibles valores son: "pending", "paid", "expired", "reverted".
-     * Documentación pública: http://bit.ly/2X6rh5k
      *
      * @var string
      */

@@ -18,5 +18,9 @@ class Types
     const ADHESION = 'adhesion';
     const HOLDER_DATA = 'holderData';
     const RESULTS = 'results';
+    const COLLECTION_DATA = 'collectionData';
+    const SETTLEMENT_DATA = 'settlementData';
+    const CHARGEBACK_DATA = 'chargebackData';
     const PAYMENT_METADATA = 'paymentMetadata';
+    const CARD_ADHESION = 'cardAdhesion';
 }

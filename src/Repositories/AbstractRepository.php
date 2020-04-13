@@ -2,18 +2,17 @@
 
 namespace Pagos360\Repositories;
 
-use Doctrine\Common\Collections\ArrayCollection;
 use Pagos360\Exceptions\MissingRequiredInputException;
-use Pagos360\Filters\AbstractFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\AbstractModel;
 use Pagos360\Models\Adhesion;
-use Pagos360\Pagination;
+use Pagos360\Models\CardAdhesion;
 use Pagos360\RestClient;
 use Pagos360\Types;
+use Psr\Log\LoggerAwareInterface;
 use Psr\Log\LoggerAwareTrait;
 
-abstract class AbstractRepository
+abstract class AbstractRepository implements LoggerAwareInterface
 {
     use LoggerAwareTrait;
 
@@ -21,6 +20,7 @@ abstract class AbstractRepository
 
     const TYPE = 'type';
     const FLAG_READONLY = 'readonly';
+    const FLAG_WRITEONLY = 'writeonly';
     const FLAG_REQUIRED = 'required';
     const FLAG_EDITABLE = 'editable';
     const PROPERTY_PATH = 'propertyPath';
@@ -85,85 +85,22 @@ abstract class AbstractRepository
     }
 
     /**
-     * @param AbstractFilters|null $filters
-     * @return array
-     */
-    protected function parseFilters(?AbstractFilters $filters): array
-    {
-        if (empty($filters)) {
-            return [];
-        }
-
-        return $filters->toQueryParams();
-    }
-
-    /**
-     * @param int             $page
-     * @param int             $itemsPerPage
-     * @param AbstractFilters $filters
-     * @return array
-     */
-    protected function buildPagedQueryString(
-        int $page,
-        int $itemsPerPage,
-        ?AbstractFilters $filters
-    ): array {
-        $pagination = new Pagination($page, $itemsPerPage);
-        $parsedFilters = $this->parseFilters($filters);
-
-        return array_merge(
-            $parsedFilters,
-            $pagination->toQueryString()
-        );
-    }
-
-    /**
-     * @param string $modelClass
-     * @param array  $input
-     * @return ArrayCollection|AbstractModel[]
-     */
-    protected function parseDatafromPaginatedResponse(
-        string $modelClass,
-        array $input
-    ): ArrayCollection {
-        $data = new ArrayCollection();
-        foreach ($input['data'] as $entity) {
-            $data[] = ModelFactory::build($modelClass, $entity);
-        }
-
-        return $data;
-    }
-
-    /**
-     * @param array $response
-     * @return Pagination
-     */
-    protected function getPaginationFromPaginatedResponse(
-        array $response
-    ): Pagination {
-        return new Pagination(
-            $response['current_page'],
-            $response['items_per_page'],
-            $response['total_count']
-        );
-    }
-
-    /**
      * Converts an internal type into the parameter expected by the api. For
      * example, it trnasforms a DateTime object into a formated string, and an
      * adhesion instance into its id.
      *
      * @param string $type
      * @param mixed  $value
-     * @return \DateTimeImmutable|string
-     * @todo review if this should be moved to ModelFactory. Seeing I had to
-     *       import Types, the answer is most likely yes.
+     * @return int|string
      */
     protected function transformField(string $type, $value)
     {
         switch ($type) {
             case Types::ADHESION:
                 /** @var Adhesion $value */
+                return $value->getId();
+            case Types::CARD_ADHESION:
+                /** @var CardAdhesion $value */
                 return $value->getId();
             case Types::DATETIME:
                 /** @var \DateTimeImmutable $value */
@@ -181,6 +118,15 @@ abstract class AbstractRepository
      * @return bool
      */
     protected function isReadonly(array $fieldDefinition): bool
+    {
+        return $fieldDefinition[self::FLAG_READONLY] ?? false;
+    }
+
+    /**
+     * @param array $fieldDefinition
+     * @return bool
+     */
+    protected function isWriteonly(array $fieldDefinition): bool
     {
         return $fieldDefinition[self::FLAG_READONLY] ?? false;
     }

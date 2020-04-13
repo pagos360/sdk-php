@@ -17,10 +17,6 @@ class AccountRepository extends AbstractRepository
             self::FLAG_READONLY => true,
             self::TYPE => Types::STRING,
         ],
-        'type' => [
-            self::FLAG_READONLY => true,
-            self::TYPE => Types::STRING,
-        ],
         "availableBalance" => [
             self::FLAG_READONLY => true,
             self::TYPE => Types::FLOAT,
@@ -30,11 +26,6 @@ class AccountRepository extends AbstractRepository
             self::FLAG_READONLY => true,
             self::TYPE => Types::FLOAT,
             self::PROPERTY_PATH => 'available_balance',
-        ],
-        'availableChannelTypes' => [
-            self::FLAG_READONLY => true,
-            self::TYPE => Types::ARRAY_OF_STRINGS,
-            self::PROPERTY_PATH => 'available_channel_types',
         ],
     ];
 
@@ -46,6 +37,6 @@ class AccountRepository extends AbstractRepository
         $url = sprintf('%s', self::API_URI);
         $fromApi = $this->restClient->get($url);
 
-        return ModelFactory::build(Account::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 }

@@ -17,7 +17,6 @@ class DebitRequest extends AbstractModel
      * Estado de la Solicitud de Débito.
      * Los posibles valores son: "pending", "paid", "expired", "reverted",
      * "canceled", "rejected".
-     * Documentación pública: http://bit.ly/30U4qwk
      *
      * @var string
      */
@@ -66,11 +65,13 @@ class DebitRequest extends AbstractModel
     protected $secondTotal;
 
     /**
-     * Descripción o concepto de la Solicitud de Débito.
+     * Objeto JSON que se puede utilizar para guardar atributos adicionales en
+     * la solicitud de debito y poder sincronizar con tus sistemas de backend.
+     * Pagos360 no utiliza este objeto.
      *
-     * @var string|null
+     * @var array|null
      */
-    protected $description;
+    protected $metadata;
 
     /**
      * @var ArrayCollection|null
@@ -182,30 +183,30 @@ class DebitRequest extends AbstractModel
     }
 
     /**
+     * @return array|null
+     */
+    public function getMetadata(): ?array
+    {
+        return $this->metadata;
+    }
+
+    /**
+     * @param array|null $metadata
+     * @return self
+     */
+    public function setMetadata(?array $metadata): self
+    {
+        $this->metadata = $metadata;
+        return $this;
+    }
+
+    /**
      * @param float|null $secondTotal
      * @return self
      */
     public function setSecondTotal(?float $secondTotal): self
     {
         $this->secondTotal = $secondTotal;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getDescription(): ?string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string|null $description
-     * @return self
-     */
-    public function setDescription(?string $description): self
-    {
-        $this->description = $description;
         return $this;
     }
 

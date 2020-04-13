@@ -8,6 +8,9 @@ use Tests\AbstractTestCase;
 
 class AdhesionRepositoryTest extends AbstractTestCase
 {
+    /**
+     * @var array
+     */
     private $mockedResponse = [
         'id' => 1,
         'external_reference' => "27231",

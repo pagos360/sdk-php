@@ -4,11 +4,9 @@ namespace Pagos360\Repositories;
 
 use Pagos360\Constants;
 use Pagos360\Exceptions\DebitRequests\DebitRequestNotPaidException;
-use Pagos360\Filters\DebitRequestFilters;
 use Pagos360\ModelFactory;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\Result;
-use Pagos360\PaginatedResponse;
 use Pagos360\Types;
 
 class DebitRequestRepository extends AbstractRepository
@@ -16,7 +14,6 @@ class DebitRequestRepository extends AbstractRepository
     const MODEL = DebitRequest::class;
     const BLOCK_PREFIX = 'debit_request';
     const API_URI = 'debit-request';
-    const DEFAULT_ITEMS_PER_PAGE = 25;
 
     const EDITABLE = false;
 
@@ -56,8 +53,9 @@ class DebitRequestRepository extends AbstractRepository
             self::TYPE => Types::FLOAT,
             self::PROPERTY_PATH => 'second_total',
         ],
-        'description' => [
-            self::TYPE => Types::STRING,
+        'metadata' => [
+            self::TYPE => Types::ARRAY,
+            self::FLAG_MAYBE => true,
         ],
         'results' => [
             self::FLAG_READONLY => true,
@@ -75,70 +73,7 @@ class DebitRequestRepository extends AbstractRepository
         $url = sprintf('%s/%s', self::API_URI, $id);
         $fromApi = $this->restClient->get($url);
 
-        return ModelFactory::build(DebitRequest::class, $fromApi);
-    }
-
-    /**
-     * @param int $page
-     * @param int $itemsPerPage
-     * @return PaginatedResponse
-     * @todo Abstract some of this?
-     */
-    public function getPage(
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            null
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
-    }
-
-    /**
-     * @param DebitRequestFilters|null $filters
-     * @param int                      $page
-     * @param int                      $itemsPerPage
-     * @return PaginatedResponse
-     */
-    public function getFilteredPage(
-        DebitRequestFilters $filters = null,
-        int $page = 1,
-        int $itemsPerPage = self::DEFAULT_ITEMS_PER_PAGE
-    ): PaginatedResponse {
-        $queryString = $this->buildPagedQueryString(
-            $page,
-            $itemsPerPage,
-            $filters
-        );
-        $paginatedResponse = $this->restClient->get(
-            self::API_URI,
-            $queryString
-        );
-
-        $pagination = $this->getPaginationFromPaginatedResponse(
-            $paginatedResponse
-        );
-        $data = $this->parseDatafromPaginatedResponse(
-            self::MODEL,
-            $paginatedResponse
-        );
-
-        return new PaginatedResponse($pagination, $data);
+        return ModelFactory::build(self::MODEL, $fromApi);
     }
 
     /**
@@ -179,7 +114,22 @@ class DebitRequestRepository extends AbstractRepository
 
         $fromApi = $this->restClient->post(self::API_URI, $serialized);
 
-        return ModelFactory::build(DebitRequest::class, $fromApi);
+        return ModelFactory::build(self::MODEL, $fromApi);
+    }
+
+    /**
+     * @param DebitRequest $debitRequest
+     * @return DebitRequest
+     */
+    public function cancel(DebitRequest $debitRequest): DebitRequest
+    {
+        $serialized = [];
+        $url = sprintf('%s/%s/cancel', self::API_URI, $debitRequest->getId());
+        $fromApi = $this->restClient->put($url, $serialized);
+
+        /** @var DebitRequest $instantiated */
+        $instantiated = ModelFactory::build(self::MODEL, $fromApi);
+        return $instantiated;
     }
 
     /**
@@ -189,7 +139,12 @@ class DebitRequestRepository extends AbstractRepository
     public function findCollectedResult(
         DebitRequest $debitRequest
     ): ?Result {
-        foreach ($debitRequest->getResults() as $result) {
+        $results = $debitRequest->getResults();
+        if (empty($results)) {
+            return null;
+        }
+
+        foreach ($results as $result) {
             /** @var Result $result */
             if ($result->getType() === 'collected_debit_request_result') {
                 return $result;
