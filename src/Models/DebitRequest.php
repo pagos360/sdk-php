@@ -15,7 +15,7 @@ class DebitRequest extends AbstractModel
 
     /**
      * Estado de la Solicitud de Débito.
-     * Los posibles valores son: "pending", "paid", "expired", "reverted",
+     * Los posibles valores son: "pending", "in_process", "paid", "reverted",
      * "canceled", "rejected".
      *
      * @var string
@@ -30,7 +30,7 @@ class DebitRequest extends AbstractModel
     protected $createdAt;
 
     /**
-     * Adhesión
+     * Objeto con el detalle de la Adhesión.
      *
      * @var Adhesion
      */
@@ -74,6 +74,8 @@ class DebitRequest extends AbstractModel
     protected $metadata;
 
     /**
+     * Objeto con el detalle de los resultados de una Solicitud de Débito.
+     *
      * @var ArrayCollection|null
      */
     protected $results;

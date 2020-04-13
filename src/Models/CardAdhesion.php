@@ -82,6 +82,7 @@ class CardAdhesion extends AbstractModel
 
     /**
      * Estado de la Adhesión.
+     * Los posibles valores son: "pending_to_sign", "signed", "canceled".
      *
      * @var string
      */
@@ -102,7 +103,8 @@ class CardAdhesion extends AbstractModel
     protected $stateComment;
 
     /**
-     * Fecha y hora de cancelación.
+     * Fecha y hora de cancelación. Si está presente, este valor
+     * indica la fecha en que la adhesion ha sido cancelada.
      *
      * @var \DateTimeImmutable|null
      */

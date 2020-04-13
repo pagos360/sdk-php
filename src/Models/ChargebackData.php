@@ -5,7 +5,7 @@ namespace Pagos360\Models;
 class ChargebackData extends AbstractModel
 {
     /**
-     * Fecha en la que se informo el Cobro.
+     * Fecha en la que se informó la Reversión.
      *
      * @var \DateTimeImmutable
      */

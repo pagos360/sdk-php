@@ -15,13 +15,15 @@ class CardDebitRequest extends AbstractModel
 
     /**
      * Estado de la Solicitud de Débito en Tarjeta.
+     * Los posibles valores son: "pending", "in_process", "paid", "reverted",
+     * "canceled", "rejected".
      *
      * @var string
      */
     protected $state;
 
     /**
-     * Fecha y hora de creación del la Solicitud.
+     * Fecha y hora de creación.
      *
      * @var \DateTimeImmutable
      */
@@ -72,7 +74,7 @@ class CardDebitRequest extends AbstractModel
     protected $cardAdhesion;
 
     /**
-     * Arreglo con el Resultado de la Solicitud de Débito en Tarjeta.
+     * Objeto con el Resultado de la Solicitud de Débito en Tarjeta.
      *
      * @var ArrayCollection|null
      */

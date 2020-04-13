@@ -35,7 +35,7 @@ class Adhesion extends AbstractModel
 
     /**
      * Este atributo se puede utilizar como referencia para identificar la
-     * Solicitud de Pago y sincronizar con tus sistemas de backend el origen de
+     * Adhesión y sincronizar con tus sistemas de backend el origen de
      * la operación. Algunos valores comunmente utilizados son: ID de Cliente,
      * DNI, CUIT, ID de venta o Nro. de Factura entre otros.
      *
@@ -94,8 +94,16 @@ class Adhesion extends AbstractModel
     protected $shortDescription;
 
     /**
-     * Motivo de cancelación de una Adhesión. Si esta presente, este valor
-     * indica porque la adhesion ha sido cancelada.
+     * Fecha y hora de cancelación. Si está presente, este valor
+     * indica la fecha en que la adhesion ha sido cancelada.
+     *
+     * @var \DateTimeInterface|null
+     */
+    protected $canceledAt;
+
+    /**
+     * Motivo de cancelación de una Adhesión. Si está presente, este valor
+     * indica por qué la adhesion ha sido cancelada.
      *
      * @var string|null
      */
@@ -284,6 +292,14 @@ class Adhesion extends AbstractModel
     {
         $this->shortDescription = $shortDescription;
         return $this;
+    }
+
+    /**
+     * @return \DateTimeInterface|null
+     */
+    public function getCanceledAt(): ?\DateTimeInterface
+    {
+        return $this->canceledAt;
     }
 
     /**

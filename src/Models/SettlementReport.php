@@ -49,14 +49,14 @@ class SettlementReport extends AbstractModel
     protected $debitAmount;
 
     /**
-     * Importe Total Rendido. (Solicitudes de Pago Cobradas menos Solicitudes de Pago Rendidas)
+     * Importe Total Rendido. (Solicitudes de Pago Cobradas menos Solicitudes de Pago Revertidas)
      *
      * @var Float
      */
     protected $settlementAmount;
 
     /**
-     * Arreglo de Objetos que contiene las Solicitudes de Pago Rendidas.
+     * Arreglo de Objetos que contiene las Solicitudes de Pago Rendidas/Revertidas.
      *
      * @var ArrayCollection
      */
