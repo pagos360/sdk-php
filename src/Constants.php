@@ -50,4 +50,6 @@ abstract class Constants
     const CHANNEL_DEBIT_CARD = 'debit_card';
     const CHANNEL_NON_BANKING = 'non_banking';
     const CHANNEL_BANKING = 'banking';
+    const CHANNEL_PMC = 'banelco_pmc';
+    const CHANNEL_DEBIN = 'DEBIN';
 }

@@ -84,11 +84,15 @@ class Result extends AbstractModel
     protected $paymentMetadata;
 
     /**
+     * Fecha y hora de creación.
+     *
      * @var \DateTimeImmutable|null
      */
     protected $createdAt;
 
     /**
+     * Fecha en la que el Pagador realizó el pago.
+     *
      * @var \DateTimeImmutable|null
      */
     protected $paidAt;
@@ -110,6 +114,8 @@ class Result extends AbstractModel
     protected $stateComment;
 
     /**
+     * Fecha y hora en la que el Pago/Débito fue Revertido.
+     *
      * @var \DateTimeImmutable|null
      */
     protected $revertedAt;

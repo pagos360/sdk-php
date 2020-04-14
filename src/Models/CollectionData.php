@@ -71,7 +71,7 @@ class CollectionData extends AbstractModel
     protected $netFee;
 
     /**
-     * Importe Reversado.
+     * IVA Neto.
      *
      * @var float
      */

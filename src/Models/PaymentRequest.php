@@ -151,8 +151,8 @@ class PaymentRequest extends AbstractModel
 
     /**
      * Tipos de Medios de Pago que serán omitidos de las opciones al pagador.
-     * Valores posibles: "banking", "credit_card", "debit_card", "link_pagos" y
-     * "non_banking".
+     * Valores posibles: "credit_card", "debit_card", "banelco_pmc",
+     * "link_pagos", "non_banking" y "DEBIN".
      *
      * @var string[]|null
      */
