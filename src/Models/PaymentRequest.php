@@ -156,7 +156,7 @@ class PaymentRequest extends AbstractModel
      *
      * @var string[]|null
      */
-    protected $excludedChannelTypes;
+    protected $excludedChannels;
 
     /**
      * @var HolderData|null
@@ -443,18 +443,18 @@ class PaymentRequest extends AbstractModel
     /**
      * @return string[]|null
      */
-    public function getExcludedChannelTypes(): ?array
+    public function getExcludedChannels(): ?array
     {
-        return $this->excludedChannelTypes;
+        return $this->excludedChannels;
     }
 
     /**
-     * @param string[]|null $excludedChannelTypes
+     * @param string[]|null $excludedChannels
      * @return self
      */
-    public function setExcludedChannelTypes(?array $excludedChannelTypes): self
+    public function setExcludedChannels(?array $excludedChannels): self
     {
-        $this->excludedChannelTypes = $excludedChannelTypes;
+        $this->excludedChannels = $excludedChannels;
         return $this;
     }
 
