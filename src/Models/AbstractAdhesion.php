@@ -98,9 +98,9 @@ class AbstractAdhesion extends AbstractModel {
 
     /**
      * @param string $email
-     * @return CardAdhesion
+     * @return self
      */
-    public function setEmail(string $email): CardAdhesion
+    public function setEmail(string $email): self
     {
         $this->email = $email;
         return $this;
@@ -116,9 +116,9 @@ class AbstractAdhesion extends AbstractModel {
 
     /**
      * @param string $description
-     * @return CardAdhesion
+     * @return self
      */
-    public function setDescription(string $description): CardAdhesion
+    public function setDescription(string $description): self
     {
         $this->description = $description;
         return $this;
@@ -177,9 +177,9 @@ class AbstractAdhesion extends AbstractModel {
 
     /**
      * @param string $externalReference
-     * @return CardAdhesion
+     * @return self
      */
-    public function setExternalReference(string $externalReference): CardAdhesion
+    public function setExternalReference(string $externalReference): self
     {
         $this->externalReference = $externalReference;
         return $this;

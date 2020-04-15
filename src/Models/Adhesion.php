@@ -2,8 +2,25 @@
 
 namespace Pagos360\Models;
 
+
+/**
+ * @method self setDescription(string $description)
+ * @method self setExternalReference(string $externalReference)
+ * @method self setEmail(string $email)
+ * @method int getId()
+ * @method string getEmail()
+ * @method string getDescription()
+ * @method string getState()
+ * @method DateTimeInterface getCreatedAt()
+ * @method DateTimeInterface getCanceledAt()
+ * @method ?array getMetadata()
+ * @method self setMetadata(?array $metadata)
+ * @method string getExternalReference()
+ */
+
 class Adhesion extends AbstractAdhesion
 {
+
     /**
      * Número de CBU de la cuenta bancaria en la que se ejecutarán los débitos.
      *
@@ -50,9 +67,9 @@ class Adhesion extends AbstractAdhesion
 
     /**
      * @param string $adhesionHolderName
-     * @return self
+     * @return Adhesion
      */
-    public function setAdhesionHolderName(string $adhesionHolderName): self
+    public function setAdhesionHolderName(string $adhesionHolderName): Adhesion
     {
         $this->adhesionHolderName = $adhesionHolderName;
         return $this;
@@ -68,9 +85,9 @@ class Adhesion extends AbstractAdhesion
 
     /**
      * @param string $cbuNumber
-     * @return self
+     * @return Adhesion
      */
-    public function setCbuNumber(string $cbuNumber): self
+    public function setCbuNumber(string $cbuNumber): Adhesion
     {
         $this->cbuNumber = $cbuNumber;
         return $this;
@@ -86,9 +103,9 @@ class Adhesion extends AbstractAdhesion
 
     /**
      * @param int $cbuHolderIdNumber
-     * @return self
+     * @return Adhesion
      */
-    public function setCbuHolderIdNumber(int $cbuHolderIdNumber): self
+    public function setCbuHolderIdNumber(int $cbuHolderIdNumber): Adhesion
     {
         $this->cbuHolderIdNumber = $cbuHolderIdNumber;
         return $this;
@@ -104,9 +121,9 @@ class Adhesion extends AbstractAdhesion
 
     /**
      * @param string $cbuHolderName
-     * @return self
+     * @return Adhesion
      */
-    public function setCbuHolderName(string $cbuHolderName): self
+    public function setCbuHolderName(string $cbuHolderName): Adhesion
     {
         $this->cbuHolderName = $cbuHolderName;
         return $this;
@@ -130,9 +147,9 @@ class Adhesion extends AbstractAdhesion
 
     /**
      * @param string $shortDescription
-     * @return self
+     * @return Adhesion
      */
-    public function setShortDescription(string $shortDescription): self
+    public function setShortDescription(string $shortDescription): Adhesion
     {
         $this->shortDescription = $shortDescription;
         return $this;

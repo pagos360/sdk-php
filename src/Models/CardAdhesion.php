@@ -2,6 +2,21 @@
 
 namespace Pagos360\Models;
 
+/**
+ * @method self setDescription(string $description)
+ * @method self setExternalReference(string $externalReference)
+ * @method self setEmail(string $email)
+ * @method int getId()
+ * @method string getEmail()
+ * @method string getDescription()
+ * @method string getState()
+ * @method DateTimeInterface getCreatedAt()
+ * @method DateTimeInterface getCanceledAt()
+ * @method ?array getMetadata()
+ * @method self setMetadata(?array $metadata)
+ * @method string getExternalReference()
+ */
+
 class CardAdhesion extends AbstractAdhesion
 {
     /**
