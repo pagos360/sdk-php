@@ -115,7 +115,7 @@ $paymentRequest = $sdk->paymentRequests->create($paymentRequest);
 Para facilitar la exclusión de canales, se proveen constantes dentro de la clase `\Pagos360\Constants`. Como la plataforma de Pagos360 se encuentra en desarrollo activo, es probable que en el futuro se agreguen más tipos de canales que aun no estén soportados en el SDK. En ese caso, se puede usar una string representando el nuevo valor.
 
 ```php
-$paymentRequest->setExcludedChannelTypes([
+$paymentRequest->setExcludedChannels([
     \Pagos360\Constants::CHANNEL_CREDIT_CARD,
     'tipo_de_canal_nuevo',
 ]);
