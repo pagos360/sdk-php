@@ -2,46 +2,24 @@
 
 namespace Pagos360\Models;
 
-class Adhesion extends AbstractModel
+
+/**
+ * @method self setDescription(string $description)
+ * @method self setExternalReference(string $externalReference)
+ * @method self setEmail(string $email)
+ * @method int getId()
+ * @method string getEmail()
+ * @method string getDescription()
+ * @method string getState()
+ * @method DateTimeInterface getCreatedAt()
+ * @method DateTimeInterface getCanceledAt()
+ * @method ?array getMetadata()
+ * @method self setMetadata(?array $metadata)
+ * @method string getExternalReference()
+ */
+
+class Adhesion extends AbstractAdhesion
 {
-    /**
-     * ID de Adhesión.
-     *
-     * @var int
-     */
-    protected $id;
-
-    /**
-     * Estado de la Adhesión.
-     * Los posibles valores son: "pending_to_sign", "signed", "canceled".
-     *
-     * @var string
-     */
-    protected $state;
-
-    /**
-     * Fecha y hora de creación.
-     *
-     * @var \DateTimeInterface
-     */
-    protected $createdAt;
-
-    /**
-     * Nombre del titular del servicio que se debitará.
-     *
-     * @var string
-     */
-    protected $adhesionHolderName;
-
-    /**
-     * Este atributo se puede utilizar como referencia para identificar la
-     * Adhesión y sincronizar con tus sistemas de backend el origen de
-     * la operación. Algunos valores comunmente utilizados son: ID de Cliente,
-     * DNI, CUIT, ID de venta o Nro. de Factura entre otros.
-     *
-     * @var string|null
-     */
-    protected $externalReference;
 
     /**
      * Número de CBU de la cuenta bancaria en la que se ejecutarán los débitos.
@@ -65,25 +43,11 @@ class Adhesion extends AbstractModel
     protected $cbuHolderName;
 
     /**
-     * Email del del titular de la cuenta bancaria.
-     *
-     * @var string
-     */
-    protected $email;
-
-    /**
      * Nombre de la entidad bancaria a la que corresponde el número de CBU.
      *
      * @var string
      */
     protected $bank;
-
-    /**
-     * Descripción o concepto de la Adhesión.
-     *
-     * @var string
-     */
-    protected $description;
 
     /**
      * Descripción Bancaria que se mostrará en el resumen de la cuenta bancaria
@@ -92,55 +56,6 @@ class Adhesion extends AbstractModel
      * @var string
      */
     protected $shortDescription;
-
-    /**
-     * Fecha y hora de cancelación. Si está presente, este valor
-     * indica la fecha en que la adhesion ha sido cancelada.
-     *
-     * @var \DateTimeInterface|null
-     */
-    protected $canceledAt;
-
-    /**
-     * Motivo de cancelación de una Adhesión. Si está presente, este valor
-     * indica por qué la adhesion ha sido cancelada.
-     *
-     * @var string|null
-     */
-    protected $stateComment;
-
-    /**
-     * Objeto JSON que se puede utilizar para guardar atributos adicionales en
-     * la adhesion y poder sincronizar con tus sistemas de backend. Pagos360 no
-     * utiliza este objeto.
-     *
-     * @var array|null
-     */
-    protected $metadata;
-
-    /**
-     * @return int
-     */
-    public function getId(): int
-    {
-        return $this->id;
-    }
-
-    /**
-     * @return string
-     */
-    public function getState(): string
-    {
-        return $this->state;
-    }
-
-    /**
-     * @return \DateTimeInterface
-     */
-    public function getCreatedAt(): \DateTimeInterface
-    {
-        return $this->createdAt;
-    }
 
     /**
      * @return string
@@ -152,29 +67,11 @@ class Adhesion extends AbstractModel
 
     /**
      * @param string $adhesionHolderName
-     * @return self
+     * @return Adhesion
      */
-    public function setAdhesionHolderName(string $adhesionHolderName): self
+    public function setAdhesionHolderName(string $adhesionHolderName): Adhesion
     {
         $this->adhesionHolderName = $adhesionHolderName;
-        return $this;
-    }
-
-    /**
-     * @return string|null
-     */
-    public function getExternalReference(): ?string
-    {
-        return $this->externalReference;
-    }
-
-    /**
-     * @param string|null $externalReference
-     * @return self
-     */
-    public function setExternalReference(?string $externalReference): self
-    {
-        $this->externalReference = $externalReference;
         return $this;
     }
 
@@ -188,9 +85,9 @@ class Adhesion extends AbstractModel
 
     /**
      * @param string $cbuNumber
-     * @return self
+     * @return Adhesion
      */
-    public function setCbuNumber(string $cbuNumber): self
+    public function setCbuNumber(string $cbuNumber): Adhesion
     {
         $this->cbuNumber = $cbuNumber;
         return $this;
@@ -206,9 +103,9 @@ class Adhesion extends AbstractModel
 
     /**
      * @param int $cbuHolderIdNumber
-     * @return self
+     * @return Adhesion
      */
-    public function setCbuHolderIdNumber(int $cbuHolderIdNumber): self
+    public function setCbuHolderIdNumber(int $cbuHolderIdNumber): Adhesion
     {
         $this->cbuHolderIdNumber = $cbuHolderIdNumber;
         return $this;
@@ -224,29 +121,11 @@ class Adhesion extends AbstractModel
 
     /**
      * @param string $cbuHolderName
-     * @return self
+     * @return Adhesion
      */
-    public function setCbuHolderName(string $cbuHolderName): self
+    public function setCbuHolderName(string $cbuHolderName): Adhesion
     {
         $this->cbuHolderName = $cbuHolderName;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
-    public function getEmail(): string
-    {
-        return $this->email;
-    }
-
-    /**
-     * @param string $email
-     * @return self
-     */
-    public function setEmail(string $email): self
-    {
-        $this->email = $email;
         return $this;
     }
 
@@ -261,24 +140,6 @@ class Adhesion extends AbstractModel
     /**
      * @return string
      */
-    public function getDescription(): string
-    {
-        return $this->description;
-    }
-
-    /**
-     * @param string $description
-     * @return self
-     */
-    public function setDescription(string $description): self
-    {
-        $this->description = $description;
-        return $this;
-    }
-
-    /**
-     * @return string
-     */
     public function getShortDescription(): string
     {
         return $this->shortDescription;
@@ -286,21 +147,14 @@ class Adhesion extends AbstractModel
 
     /**
      * @param string $shortDescription
-     * @return self
+     * @return Adhesion
      */
-    public function setShortDescription(string $shortDescription): self
+    public function setShortDescription(string $shortDescription): Adhesion
     {
         $this->shortDescription = $shortDescription;
         return $this;
     }
 
-    /**
-     * @return \DateTimeInterface|null
-     */
-    public function getCanceledAt(): ?\DateTimeInterface
-    {
-        return $this->canceledAt;
-    }
 
     /**
      * @return string|null
@@ -310,21 +164,5 @@ class Adhesion extends AbstractModel
         return $this->stateComment;
     }
 
-    /**
-     * @return array|null
-     */
-    public function getMetadata(): ?array
-    {
-        return $this->metadata;
-    }
 
-    /**
-     * @param array|null $metadata
-     * @return self
-     */
-    public function setMetadata(?array $metadata): self
-    {
-        $this->metadata = $metadata;
-        return $this;
-    }
 }
