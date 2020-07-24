@@ -76,7 +76,11 @@ Si bien el objetivo del SDK es simplificar el proceso de integración, no es un 
 Para empezar a utilizar el SDK desde su código, se provee una clase `\Pagos360\Sdk`, la cual toma como único parámetro una _API KEY_ generada desde el menú de _Integraciones_ desde el portal web de Pagos360.
 
 ```php
-$sdk = new \Pagos360\Sdk(getenv('PAGOS360_API_KEY'));
+$sdk = new \Pagos360\Sdk('API_KEY_VALUE');
+```
+O si tenes una variable de entorno configurada
+```php
+$sdk = new \Pagos360\Sdk(getenv('API_KEY_VAR_NAME'));
 ```
 
 Para comprobar que la _API KEY_ esté configurada correctamente, se puede utilizar el repositorio de cuenta.
