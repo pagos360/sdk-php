@@ -62,7 +62,7 @@ SDK para realizar transacciones por medio de Pagos360
 La instalación se debe hacer mediante [Composer](http://getcomposer.org/) con el siguiente comando:
 
 ```bash
-composer require pagos360/sdk-php
+composer require pagos360/sdk
 ```
 
 # Introducción
