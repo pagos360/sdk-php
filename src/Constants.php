@@ -52,4 +52,5 @@ abstract class Constants
     const CHANNEL_BANKING = 'banking';
     const CHANNEL_PMC = 'banelco_pmc';
     const CHANNEL_DEBIN = 'DEBIN';
+    const CHANNEL_LINK_PAGOS = 'link_pagos';
 }
