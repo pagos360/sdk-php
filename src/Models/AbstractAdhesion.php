@@ -2,7 +2,8 @@
 
 namespace Pagos360\Models;
 
-class AbstractAdhesion extends AbstractModel {
+class AbstractAdhesion extends AbstractModel
+{
     /**
      * ID de Adhesión.
      *
@@ -184,7 +185,4 @@ class AbstractAdhesion extends AbstractModel {
         $this->externalReference = $externalReference;
         return $this;
     }
-
-
-
 }

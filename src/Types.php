@@ -22,5 +22,6 @@ class Types
     const SETTLEMENT_DATA = 'settlementData';
     const CHARGEBACK_DATA = 'chargebackData';
     const PAYMENT_METADATA = 'paymentMetadata';
+    const ITEMS = 'items';
     const CARD_ADHESION = 'cardAdhesion';
 }

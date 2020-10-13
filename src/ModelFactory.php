@@ -14,6 +14,7 @@ use Pagos360\Models\CollectionData;
 use Pagos360\Models\CollectionReport;
 use Pagos360\Models\DebitRequest;
 use Pagos360\Models\HolderData;
+use Pagos360\Models\Items;
 use Pagos360\Models\PaymentMetadata;
 use Pagos360\Models\PaymentRequest;
 use Pagos360\Models\Result;
@@ -30,6 +31,7 @@ use Pagos360\Repositories\CollectionDataRepository;
 use Pagos360\Repositories\CollectionReportRepository;
 use Pagos360\Repositories\DebitRequestRepository;
 use Pagos360\Repositories\HolderDataRepository;
+use Pagos360\Repositories\ItemsRepository;
 use Pagos360\Repositories\PaymentMetadataRepository;
 use Pagos360\Repositories\PaymentRequestRepository;
 use Pagos360\Repositories\ResultRepository;
@@ -67,6 +69,9 @@ class ModelFactory
                 break;
             case PaymentMetadata::class:
                 $fields = PaymentMetadataRepository::FIELDS;
+                break;
+            case Items::class:
+                $fields = ItemsRepository::FIELDS;
                 break;
             case CollectionReport::class:
                 $fields = CollectionReportRepository::FIELDS;
@@ -237,6 +242,8 @@ class ModelFactory
                 return self::build(HolderData::class, $value);
             case Types::PAYMENT_METADATA:
                 return self::build(PaymentMetadata::class, $value);
+            case Types::ITEMS:
+                return self::build(Items::class, $value);
             case Types::RESULTS:
                 return self::buildCollection(Types::RESULTS, $value);
             case Types::COLLECTION_DATA:
