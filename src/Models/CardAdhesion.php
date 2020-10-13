@@ -117,5 +117,4 @@ class CardAdhesion extends AbstractAdhesion
     {
         return $this->stateComment;
     }
-
 }

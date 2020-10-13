@@ -2,7 +2,6 @@
 
 namespace Pagos360\Models;
 
-
 /**
  * @method self setDescription(string $description)
  * @method self setExternalReference(string $externalReference)
@@ -163,6 +162,4 @@ class Adhesion extends AbstractAdhesion
     {
         return $this->stateComment;
     }
-
-
 }
