@@ -126,6 +126,15 @@ class PaymentRequest extends AbstractModel
     protected $pdfUrl;
 
     /**
+     * Objeto JSON que se puede utilizar para listar todos los productos
+     * o servicios asociados a la solicitud de pago, para que sean incluidos
+     * como un detalle del comprobante de pago.
+     *
+     * @var array|null
+     */
+    protected $items;
+
+    /**
      * En el caso de estar especificado el pagador será redirigido a esta URL
      * ante un pago exitoso.
      *
@@ -472,5 +481,23 @@ class PaymentRequest extends AbstractModel
     public function getResults(): ?ArrayCollection
     {
         return $this->results;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getItems(): ?array
+    {
+        return $this->items;
+    }
+
+    /**
+     * @param array|null $items
+     * @return self
+     */
+    public function setItems(?array $items): self
+    {
+        $this->items = $items;
+        return $this;
     }
 }

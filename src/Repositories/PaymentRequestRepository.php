@@ -118,6 +118,10 @@ class PaymentRequestRepository extends AbstractRepository
             self::FLAG_MAYBE => true,
             self::FLAG_READONLY => true,
         ],
+        'items' => [
+            self::TYPE => Types::ARRAY,
+            self::FLAG_MAYBE => true,
+        ],
     ];
 
     /**
