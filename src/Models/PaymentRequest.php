@@ -178,6 +178,11 @@ class PaymentRequest extends AbstractModel
     protected $results;
 
     /**
+     * @var array|null
+     */
+    protected $transferTo;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -498,6 +503,24 @@ class PaymentRequest extends AbstractModel
     public function setItems(?array $items): self
     {
         $this->items = $items;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getTransferTo(): ?array
+    {
+        return $this->transferTo;
+    }
+
+    /**
+     * @param array|null $transferTo
+     * @return self
+     */
+    public function setTransferTo(?array $transferTo): self
+    {
+        $this->transferTo = $transferTo;
         return $this;
     }
 }

@@ -67,18 +67,25 @@ class RestClient implements LoggerAwareInterface
     /**
      * @param string $url
      * @param array  $body
+     * @param array  $headers
      * @return array
      * @throws ClientError
      */
-    public function post(string $url, array $body): array
+    public function post(string $url, array $body, array $headers = []): array
     {
         $requestBody = json_encode($body);
+        $requestHeaders = [
+            'Authorization' => 'Bearer ' . $this->apiKey,
+        ];
+
+        if (!empty($headers)) {
+            $requestHeaders = array_merge($requestHeaders, $headers);
+        }
+
         $response = $this->guzzleClient->post(
             $url,
             [
-                RequestOptions::HEADERS => [
-                    'Authorization' => 'Bearer ' . $this->apiKey,
-                ],
+                RequestOptions::HEADERS => $requestHeaders,
                 RequestOptions::BODY => $requestBody,
             ]
         );
