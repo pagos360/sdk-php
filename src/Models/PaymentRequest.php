@@ -178,6 +178,10 @@ class PaymentRequest extends AbstractModel
     protected $results;
 
     /**
+     * Permite generar automáticamente una Transferencia Programada desde
+     * una cuenta PAGOS360 a una o más cuentas de PAGOS360 en el momento
+     * que una Solicitud de Pago es abonada.
+     *
      * @var array|null
      */
     protected $transferTo;

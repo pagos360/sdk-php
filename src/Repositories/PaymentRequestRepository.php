@@ -143,11 +143,11 @@ class PaymentRequestRepository extends AbstractRepository
 
     /**
      * @param PaymentRequest $paymentRequest
-     * @param array $headers
+     * @param array          $headers
      * @return PaymentRequest
      * @throws MissingRequiredInputException
      */
-    public function create(PaymentRequest $paymentRequest, $headers = [])
+    public function create(PaymentRequest $paymentRequest, array $headers = [])
     {
         $serialized = $this->buildBodyToSave(
             $paymentRequest,
