@@ -27,5 +27,10 @@ class TransferToRepository extends AbstractRepository
             self::TYPE => Types::STRING,
             self::PROPERTY_PATH => 'description',
         ],
+        'refundable' => [
+            self::FLAG_READONLY => true,
+            self::TYPE => Types::BOOL,
+            self::PROPERTY_PATH => 'refundable',
+        ],
     ];
 }
