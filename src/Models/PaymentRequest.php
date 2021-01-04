@@ -178,6 +178,15 @@ class PaymentRequest extends AbstractModel
     protected $results;
 
     /**
+     * Permite generar automáticamente una Transferencia Programada desde
+     * una cuenta PAGOS360 a una o más cuentas de PAGOS360 en el momento
+     * que una Solicitud de Pago es abonada.
+     *
+     * @var array|null
+     */
+    protected $transferTo;
+
+    /**
      * @return int
      */
     public function getId(): int
@@ -498,6 +507,24 @@ class PaymentRequest extends AbstractModel
     public function setItems(?array $items): self
     {
         $this->items = $items;
+        return $this;
+    }
+
+    /**
+     * @return array|null
+     */
+    public function getTransferTo(): ?array
+    {
+        return $this->transferTo;
+    }
+
+    /**
+     * @param array|null $transferTo
+     * @return self
+     */
+    public function setTransferTo(?array $transferTo): self
+    {
+        $this->transferTo = $transferTo;
         return $this;
     }
 }

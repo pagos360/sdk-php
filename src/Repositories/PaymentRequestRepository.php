@@ -122,6 +122,11 @@ class PaymentRequestRepository extends AbstractRepository
             self::TYPE => Types::ARRAY,
             self::FLAG_MAYBE => true,
         ],
+        'transferTo' => [
+            self::TYPE => Types::ARRAY,
+            self::FLAG_MAYBE => true,
+            self::PROPERTY_PATH => 'transfer_to',
+        ],
     ];
 
     /**
@@ -138,10 +143,11 @@ class PaymentRequestRepository extends AbstractRepository
 
     /**
      * @param PaymentRequest $paymentRequest
+     * @param array          $headers
      * @return PaymentRequest
      * @throws MissingRequiredInputException
      */
-    public function create(PaymentRequest $paymentRequest)
+    public function create(PaymentRequest $paymentRequest, array $headers = [])
     {
         $serialized = $this->buildBodyToSave(
             $paymentRequest,
@@ -149,7 +155,7 @@ class PaymentRequestRepository extends AbstractRepository
             self::FIELDS
         );
 
-        $fromApi = $this->restClient->post(self::API_URI, $serialized);
+        $fromApi = $this->restClient->post(self::API_URI, $serialized, $headers);
 
         return ModelFactory::build(self::MODEL, $fromApi);
     }
