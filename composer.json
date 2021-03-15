@@ -21,7 +21,7 @@
     "php": ">=7.1",
     "ext-json": "*",
     "ext-curl": "*",
-    "guzzlehttp/guzzle": "^6.3",
+    "guzzlehttp/guzzle": "^7.2",
     "doctrine/collections": "^1.6",
     "psr/log": "^1.1"
   },
