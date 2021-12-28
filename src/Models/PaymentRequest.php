@@ -168,6 +168,14 @@ class PaymentRequest extends AbstractModel
     protected $excludedChannels;
 
     /**
+     * Cuotas de Pago que serán omitidas en las opciones al pagador.
+     * Valores posibles: 1, 2, 3, etc
+     *
+     * @var string[]|null
+     */
+    protected $excludedInstallments;
+
+    /**
      * @var HolderData|null
      */
     protected $holderData;
@@ -473,6 +481,24 @@ class PaymentRequest extends AbstractModel
     public function setExcludedChannels(?array $excludedChannels): self
     {
         $this->excludedChannels = $excludedChannels;
+        return $this;
+    }
+    
+    /**
+     * @return string[]|null
+     */
+    public function getExcludedInstallments(): ?array
+    {
+        return $this->excludedInstallments;
+    }
+
+    /**
+     * @param string[]|null $excludedInstallments
+     * @return self
+     */
+    public function setExcludedInstallments(?array $excludedInstallments): self
+    {
+        $this->excludedInstallments = $excludedInstallments;
         return $this;
     }
 

@@ -125,6 +125,14 @@ $paymentRequest->setExcludedChannels([
 ]);
 ```
 
+#### Excluir cuotas
+
+Números de las cuotas que serán omitidas de las opciones al pagador (Solo aplica para el medio de pago Tarjeta de Crédito).
+
+```php
+$paymentRequest->setExcludedInstallments([1, 3, 6]));
+```
+
 ### Buscar por id
 
 [Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id)
