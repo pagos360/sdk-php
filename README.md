@@ -127,9 +127,7 @@ $paymentRequest->setExcludedChannels([
 
 #### Excluir cuotas
 
-Utilizando este metodo, usted podrá excluir las cuotas que desee para una determinada
-Solicitud de Pago. Para ello se necesita pasar como parametro un array de enteros donde
-cada uno de ellos representa la cuota que se va a excluir.
+Números de las cuotas que serán omitidas de las opciones al pagador (Solo aplica para el medio de pago Tarjeta de Crédito).
 
 ```php
 $paymentRequest->setExcludedInstallments([1, 3, 6]));
