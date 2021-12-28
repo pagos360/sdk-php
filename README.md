@@ -133,7 +133,7 @@ Números de las cuotas que serán omitidas de las opciones al pagador (Solo apli
 $paymentRequest->setExcludedInstallments([1, 3, 6]));
 ```
 
-#### Excluir tarjetas
+#### Excluir marcas de tarjetas
 
 Códigos de las tarjetas que serán omitdas de las opciones al pagador. Valores posibles: campo code del endpoint Obtener Planes y Cuotas (Solo aplica para el medio de pago Tarjeta de Crédito). 
 

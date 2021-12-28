@@ -176,8 +176,8 @@ class PaymentRequest extends AbstractModel
     protected $excludedInstallments;
 
     /**
-     * Cuotas de Pago que serán omitidas en las opciones al pagador.
-     * Valores posibles: 1, 2, 3, etc (Dependiendo los canales habilitados en su tabla de comisión)
+     * Marcas de tarjetas que serán omitidas en las opciones al pagador.
+     * Valores posibles: 1, 2, 3, etc (Dependiendo los canales habilitados)
      *
      * @var string[]|null
      */
