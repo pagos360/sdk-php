@@ -106,6 +106,10 @@ class PaymentRequestRepository extends AbstractRepository
             self::TYPE => Types::ARRAY_OF_STRINGS,
             self::PROPERTY_PATH => 'excluded_channels',
         ],
+        'excludedInstallments' => [
+            self::TYPE => Types::ARRAY_OF_STRINGS,
+            self::PROPERTY_PATH => 'excluded_installments',
+        ],
         'holderData' => [
             self::FLAG_READONLY => true,
             self::TYPE => Types::HOLDER_DATA,
