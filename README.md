@@ -125,6 +125,16 @@ $paymentRequest->setExcludedChannels([
 ]);
 ```
 
+#### Excluir cuotas
+
+Utilizando este metodo, usted podrá excluir las cuotas que desee para una determinada
+Solicitud de Pago. Para ello se necesita pasar como parametro un array de enteros donde
+cada uno de ellos representa la cuota que se va a excluir.
+
+```php
+$paymentRequest->setExcludedInstallments([1, 3, 6]));
+```
+
 ### Buscar por id
 
 [Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id)
