@@ -130,7 +130,15 @@ $paymentRequest->setExcludedChannels([
 Números de las cuotas que serán omitidas de las opciones al pagador (Solo aplica para el medio de pago Tarjeta de Crédito).
 
 ```php
-$paymentRequest->setExcludedInstallments([1, 3, 6]));
+$paymentRequest->setExcludedInstallments([1, 3, 6]);
+```
+
+#### Excluir marcas de tarjetas
+
+Códigos de las tarjetas que serán omitdas de las opciones al pagador. Valores posibles: campo code del endpoint Obtener Planes y Cuotas (Solo aplica para el medio de pago Tarjeta de Crédito). 
+
+```php
+$paymentRequest->setExcludedCardBrands([1, 5, 10]);
 ```
 
 ### Buscar por id
