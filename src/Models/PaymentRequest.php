@@ -176,6 +176,14 @@ class PaymentRequest extends AbstractModel
     protected $excludedInstallments;
 
     /**
+     * Cuotas de Pago que serán omitidas en las opciones al pagador.
+     * Valores posibles: 1, 2, 3, etc (Dependiendo los canales habilitados en su tabla de comisión)
+     *
+     * @var string[]|null
+     */
+    protected $excludedCardBrands;
+
+    /**
      * @var HolderData|null
      */
     protected $holderData;
@@ -490,6 +498,24 @@ class PaymentRequest extends AbstractModel
     public function getExcludedInstallments(): ?array
     {
         return $this->excludedInstallments;
+    }
+
+    /**
+     * @param string[]|null $excludedCardBrands
+     * @return self
+     */
+    public function setExcludedCardBrands(?array $excludedCardBrands): self
+    {
+        $this->excludedCardBrands = $excludedCardBrands;
+        return $this;
+    }
+    
+    /**
+     * @return string[]|null
+     */
+    public function getExcludedCardBrands(): ?array
+    {
+        return $this->excludedCardBrands;
     }
 
     /**
