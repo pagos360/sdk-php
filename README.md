@@ -137,6 +137,10 @@ $paymentRequest->setExcludedInstallments([1, 3, 6]));
 
 Códigos de las tarjetas que serán omitdas de las opciones al pagador. Valores posibles: campo code del endpoint Obtener Planes y Cuotas (Solo aplica para el medio de pago Tarjeta de Crédito). 
 
+```php
+$paymentRequest->setExcludedCardBrands([1, 5, 10]));
+```
+
 ### Buscar por id
 
 [Documentación](https://developers.pagos360.com/endpoints/payment-request/get_payment-request-id)
